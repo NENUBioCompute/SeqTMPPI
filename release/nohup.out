@@ -1,0 +1,103 @@
+2020-12-21 15:23:59.592545: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /usr/local/cuda-8.0/lib:/usr/local/cuda-8.0/lib64:/usr/local/cuda-10.0/lib64:/usr/local/cuda-10.0/lib64:/path/to/build/lib64:/usr/local/lib
+2020-12-21 15:23:59.593052: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+6,7
+2020-12-21 15:24:18.021316: I tensorflow/compiler/jit/xla_gpu_device.cc:99] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2020-12-21 15:24:18.039620: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcuda.so.1
+2020-12-21 15:24:20.982317: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1720] Found device 0 with properties: 
+pciBusID: 0000:87:00.0 name: GeForce GTX 1080 Ti computeCapability: 6.1
+coreClock: 1.582GHz coreCount: 28 deviceMemorySize: 10.92GiB deviceMemoryBandwidth: 451.17GiB/s
+2020-12-21 15:24:20.999823: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1720] Found device 1 with properties: 
+pciBusID: 0000:88:00.0 name: GeForce GTX 1080 Ti computeCapability: 6.1
+coreClock: 1.582GHz coreCount: 28 deviceMemorySize: 10.92GiB deviceMemoryBandwidth: 451.17GiB/s
+2020-12-21 15:24:21.002840: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /usr/local/cuda-8.0/lib:/usr/local/cuda-8.0/lib64:/usr/local/cuda-10.0/lib64:/usr/local/cuda-10.0/lib64:/path/to/build/lib64:/usr/local/lib
+2020-12-21 15:24:21.005062: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcublas.so.11'; dlerror: libcublas.so.11: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /usr/local/cuda-8.0/lib:/usr/local/cuda-8.0/lib64:/usr/local/cuda-10.0/lib64:/usr/local/cuda-10.0/lib64:/path/to/build/lib64:/usr/local/lib
+2020-12-21 15:24:21.006376: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcublasLt.so.11'; dlerror: libcublasLt.so.11: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /usr/local/cuda-8.0/lib:/usr/local/cuda-8.0/lib64:/usr/local/cuda-10.0/lib64:/usr/local/cuda-10.0/lib64:/path/to/build/lib64:/usr/local/lib
+2020-12-21 15:24:21.006695: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcufft.so.10'; dlerror: libcufft.so.10: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /usr/local/cuda-8.0/lib:/usr/local/cuda-8.0/lib64:/usr/local/cuda-10.0/lib64:/usr/local/cuda-10.0/lib64:/path/to/build/lib64:/usr/local/lib
+2020-12-21 15:24:21.007106: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcurand.so.10'; dlerror: libcurand.so.10: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /usr/local/cuda-8.0/lib:/usr/local/cuda-8.0/lib64:/usr/local/cuda-10.0/lib64:/usr/local/cuda-10.0/lib64:/path/to/build/lib64:/usr/local/lib
+2020-12-21 15:24:21.008491: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcusolver.so.10'; dlerror: libcusolver.so.10: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /usr/local/cuda-8.0/lib:/usr/local/cuda-8.0/lib64:/usr/local/cuda-10.0/lib64:/usr/local/cuda-10.0/lib64:/path/to/build/lib64:/usr/local/lib
+2020-12-21 15:24:21.009459: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcusparse.so.11'; dlerror: libcusparse.so.11: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /usr/local/cuda-8.0/lib:/usr/local/cuda-8.0/lib64:/usr/local/cuda-10.0/lib64:/usr/local/cuda-10.0/lib64:/path/to/build/lib64:/usr/local/lib
+2020-12-21 15:24:21.009813: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcudnn.so.8'; dlerror: libcudnn.so.8: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /usr/local/cuda-8.0/lib:/usr/local/cuda-8.0/lib64:/usr/local/cuda-10.0/lib64:/usr/local/cuda-10.0/lib64:/path/to/build/lib64:/usr/local/lib
+2020-12-21 15:24:21.009909: W tensorflow/core/common_runtime/gpu/gpu_device.cc:1757] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+2020-12-21 15:24:21.011165: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1261] Device interconnect StreamExecutor with strength 1 edge matrix:
+2020-12-21 15:24:21.011396: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1267]      0 1 
+2020-12-21 15:24:21.011522: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1280] 0:   N Y 
+2020-12-21 15:24:21.011544: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1280] 1:   Y N 
+2020-12-21 15:25:52.082542: I tensorflow/compiler/jit/xla_cpu_device.cc:41] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2020-12-21 15:25:52.104028: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1720] Found device 0 with properties: 
+pciBusID: 0000:87:00.0 name: GeForce GTX 1080 Ti computeCapability: 6.1
+coreClock: 1.582GHz coreCount: 28 deviceMemorySize: 10.92GiB deviceMemoryBandwidth: 451.17GiB/s
+2020-12-21 15:25:52.119608: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1720] Found device 1 with properties: 
+pciBusID: 0000:88:00.0 name: GeForce GTX 1080 Ti computeCapability: 6.1
+coreClock: 1.582GHz coreCount: 28 deviceMemorySize: 10.92GiB deviceMemoryBandwidth: 451.17GiB/s
+2020-12-21 15:25:52.123387: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /usr/local/cuda-8.0/lib:/usr/local/cuda-8.0/lib64:/usr/local/cuda-10.0/lib64:/usr/local/cuda-10.0/lib64:/path/to/build/lib64:/usr/local/lib
+2020-12-21 15:25:52.124049: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcublas.so.11'; dlerror: libcublas.so.11: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /usr/local/cuda-8.0/lib:/usr/local/cuda-8.0/lib64:/usr/local/cuda-10.0/lib64:/usr/local/cuda-10.0/lib64:/path/to/build/lib64:/usr/local/lib
+2020-12-21 15:25:52.124496: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcublasLt.so.11'; dlerror: libcublasLt.so.11: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /usr/local/cuda-8.0/lib:/usr/local/cuda-8.0/lib64:/usr/local/cuda-10.0/lib64:/usr/local/cuda-10.0/lib64:/path/to/build/lib64:/usr/local/lib
+2020-12-21 15:25:52.124878: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcufft.so.10'; dlerror: libcufft.so.10: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /usr/local/cuda-8.0/lib:/usr/local/cuda-8.0/lib64:/usr/local/cuda-10.0/lib64:/usr/local/cuda-10.0/lib64:/path/to/build/lib64:/usr/local/lib
+2020-12-21 15:25:52.125282: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcurand.so.10'; dlerror: libcurand.so.10: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /usr/local/cuda-8.0/lib:/usr/local/cuda-8.0/lib64:/usr/local/cuda-10.0/lib64:/usr/local/cuda-10.0/lib64:/path/to/build/lib64:/usr/local/lib
+2020-12-21 15:25:52.125868: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcusolver.so.10'; dlerror: libcusolver.so.10: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /usr/local/cuda-8.0/lib:/usr/local/cuda-8.0/lib64:/usr/local/cuda-10.0/lib64:/usr/local/cuda-10.0/lib64:/path/to/build/lib64:/usr/local/lib
+2020-12-21 15:25:52.126415: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcusparse.so.11'; dlerror: libcusparse.so.11: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /usr/local/cuda-8.0/lib:/usr/local/cuda-8.0/lib64:/usr/local/cuda-10.0/lib64:/usr/local/cuda-10.0/lib64:/path/to/build/lib64:/usr/local/lib
+2020-12-21 15:25:52.126727: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcudnn.so.8'; dlerror: libcudnn.so.8: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /usr/local/cuda-8.0/lib:/usr/local/cuda-8.0/lib64:/usr/local/cuda-10.0/lib64:/usr/local/cuda-10.0/lib64:/path/to/build/lib64:/usr/local/lib
+2020-12-21 15:25:52.126802: W tensorflow/core/common_runtime/gpu/gpu_device.cc:1757] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+2020-12-21 15:25:52.131682: I tensorflow/compiler/jit/xla_gpu_device.cc:99] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2020-12-21 15:25:52.131853: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1261] Device interconnect StreamExecutor with strength 1 edge matrix:
+2020-12-21 15:25:52.131876: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1267]      
+2020-12-21 15:25:52.719469: W tensorflow/core/framework/cpu_allocator_impl.cc:80] Allocation of 7176288000 exceeds 10% of free system memory.
+2020-12-21 15:26:25.819236: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:116] None of the MLIR optimization passes are enabled (registered 2)
+2020-12-21 15:26:25.830108: I tensorflow/core/platform/profile_utils/cpu_utils.cc:112] CPU Frequency: 2100030000 Hz
+2020-12-21 15:26:55.637483: W tensorflow/core/framework/cpu_allocator_impl.cc:80] Allocation of 23466000000 exceeds 10% of free system memory.
+2020-12-21 15:33:27.990490: W tensorflow/core/framework/cpu_allocator_impl.cc:80] Allocation of 23466000000 exceeds 10% of free system memory.
+start 2020-12-21 15:24:17
+training on the model
+/home/19jjhnenu/Data/SeqTMPPI2W/result/p_fw_13349/0
+dirout: /home/19jjhnenu/Data/SeqTMPPI2W/result/p_fw_13349/0
+dir_in: /home/19jjhnenu/Data/SeqTMPPI2W/feature/p_fw_13349/0
+fin_pair /home/19jjhnenu/Data/SeqTMPPI2W/pair/p_fw_13349/0/train.txt
+Build and fit model...
+x_train.shape[1:] (4000, 21)
+x_train.shape,x_test.shape (4000, 21) (4000, 21)
+Model: "sequential"
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+conv1d (Conv1D)              (None, 3911, 300)         567300    
+_________________________________________________________________
+global_average_pooling1d (Gl (None, 300)               0         
+_________________________________________________________________
+dense (Dense)                (None, 1)                 301       
+=================================================================
+Total params: 567,601
+Trainable params: 567,601
+Non-trainable params: 0
+_________________________________________________________________
+Epoch 1/80
+Traceback (most recent call last):
+  File "stepdeal20201220.py", line 105, in <module>
+    entry(dirout, fin_pair, dir_in, model_type=Param.CNN1D_OH, limit=0, onehot=onehot, kernel_size=90,
+  File "/home/19jjhnenu/Code/SeqTMPPI20201207/release/entry.py", line 56, in entry
+    mm.process(dirout,x_train, y_train, x_test, y_test)
+  File "/home/19jjhnenu/Code/SeqTMPPI20201207/release/myModel.py", line 69, in process
+    self.fit(x_train,y_train,validation_data=(x_test, y_test))
+  File "/home/19jjhnenu/Code/SeqTMPPI20201207/release/myModel.py", line 102, in fit
+    self.history  = self.model.fit(x_train, y_train,
+  File "/usr/local/python3/lib/python3.8/site-packages/tensorflow/python/keras/engine/training.py", line 1100, in fit
+    tmp_logs = self.train_function(iterator)
+  File "/usr/local/python3/lib/python3.8/site-packages/tensorflow/python/eager/def_function.py", line 828, in __call__
+    result = self._call(*args, **kwds)
+  File "/usr/local/python3/lib/python3.8/site-packages/tensorflow/python/eager/def_function.py", line 888, in _call
+    return self._stateless_fn(*args, **kwds)
+  File "/usr/local/python3/lib/python3.8/site-packages/tensorflow/python/eager/function.py", line 2942, in __call__
+    return graph_function._call_flat(
+  File "/usr/local/python3/lib/python3.8/site-packages/tensorflow/python/eager/function.py", line 1918, in _call_flat
+    return self._build_call_outputs(self._inference_function.call(
+  File "/usr/local/python3/lib/python3.8/site-packages/tensorflow/python/eager/function.py", line 555, in call
+    outputs = execute.execute(
+  File "/usr/local/python3/lib/python3.8/site-packages/tensorflow/python/eager/execute.py", line 59, in quick_execute
+    tensors = pywrap_tfe.TFE_Py_Execute(ctx._handle, device_name, op_name,
+tensorflow.python.framework.errors_impl.InvalidArgumentError:  Number of elements was larger than representable by 32-bit output type
+	 [[node gradient_tape/sequential/global_average_pooling1d/Prod (defined at /home/19jjhnenu/Code/SeqTMPPI20201207/release/myModel.py:102) ]] [Op:__inference_train_function_1171]
+
+Function call stack:
+train_function
+
