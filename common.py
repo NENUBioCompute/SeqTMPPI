@@ -112,14 +112,16 @@ def getCol(finPair, fout,col=1,repeat=False):
             line = fi.readline()
     return proteinlist
 
-def countline(fin,rename=True):
+def countline(fin,rename=False):
     with open(fin,'r',encoding='utf-8') as fo:
-        rowsnum = len(fo.readlines())
+        sentences = fo.readlines()
+        rowsnum = len(sentences)
+        print(sentences[0])
     indir,fname = os.path.split(fin)
     prename = fname.split('.')[0]
     endname = fname.split('.')[1]
     if rename:os.rename(fin,os.path.join(indir,'%s_%d.%s'%(prename,rowsnum,endname)))
-    else:print(os.path.join(indir,'%s_%d.%s'%(prename,rowsnum,endname)))
+    else:print(os.path.join(indir,'%s, %d'%(fin,rowsnum)))
 def concatFile(fileList,fout):
     with open(fout,'w') as fo:
         for eathFile in fileList:

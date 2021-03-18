@@ -59,7 +59,7 @@ if __name__ == '__main__':
     '''
     # generateHumanLists(f1tmp, f1nontmp)
     '''
-    get single info
+    get qualified single info
     '''
     # getSingleInfo(f1tmp,f1tmpInfo,fin_type='single')
     # getSingleInfo(f1nontmp,f1nontmpInfo,fin_type='single')
@@ -121,7 +121,11 @@ if __name__ == '__main__':
 
     print('testing the model')
     # savepredict(f4sample1k, dirout_feature, fin_model, dirout_result,batch_size=500)
-    savepredict(f4sample1k, dirout_feature, fin_model_group0, dirout_result_group0,batch_size=500)
+    '''
+    predict human pair in group 0
+    time 766.0980250835419
+    '''
+    # savepredict(f4sample1k, dirout_feature, fin_model_group0, dirout_result_group0,batch_size=500)
 
 
     # df = pd.read_table(f15Tmp_nonTMP_hasPDB, header=None)

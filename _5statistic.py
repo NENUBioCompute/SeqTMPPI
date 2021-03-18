@@ -2,11 +2,11 @@ import os
 import time
 
 from DatabaseOperation2 import DataOperation
-from common import readIDlist, saveList, concatFile
+from common import readIDlist, saveList, concatFile, check_path, countline
 from dao import queryProtein, save, getPfam, queryPfam, findKeyProtein, proteinPfam, findGProtein, getALlGprotein
 import pandas as pd
 
-from dataset import handleRow
+from dataset import handleRow, extractPairAndFasta, getproteinlist
 
 
 def findpartner(fpair,fin,fout,col=0):
@@ -36,10 +36,24 @@ def matchInfo(finPair,finPairInfo,foutPairInfo):
     df_posi.columns = [0,7]
     df_posiInfo = pd.merge(df_posi,df_all_info,on=[0,7])
     df_posiInfo.to_csv(foutPairInfo,sep='\t',header=None,index=None)
-def findSpecies(f1posiInfo,f8species,f8tmp_species,f8nontmp_species,f8sameSpecies,f8posiSpecies):
+def findSpecies(f1posiInfo,f8species,f8tmp_species,f8nontmp_species,f8sameSpecies,f8posiSpecies,col=[2,8]):
+    '''
+
+    :param f1posiInfo: fin
+    :param f8species:fout
+                            P34709	CAEEL
+                            Q61824	MOUSE
+                            ....
+                            P00533	HUMAN
+    :param f8tmp_species:
+    :param f8nontmp_species:
+    :param f8sameSpecies:
+    :param f8posiSpecies:
+    :return:
+    '''
     df_info = pd.read_table(f1posiInfo,header=None)
-    df_info[19] = df_info[2].apply(lambda x:x.split('_')[1])
-    df_info[20] = df_info[8].apply(lambda x:x.split('_')[1])
+    df_info[19] = df_info[col[0]].apply(lambda x:x.split('_')[1])
+    df_info[20] = df_info[col[1]].apply(lambda x:x.split('_')[1])
     df_tmp_speceis = df_info[[0,19]].drop_duplicates()
     df_nontmp_speceis = df_info[[1,20]].drop_duplicates()
     df_same = df_info[df_info[19]==df_info[20]]
@@ -52,11 +66,21 @@ def findSpecies(f1posiInfo,f8species,f8tmp_species,f8nontmp_species,f8sameSpecie
     df_same.to_csv(f8sameSpecies,header=None,index=None,sep='\t')
     df_info.to_csv(f8posiSpecies,header=None,index=None,sep='\t')
     df_species.to_csv(f8species,header=None,index=None,sep='\t')
-def relatedSpecies(f8posiSpecies,species,f9human_related,f9human_human):
+def relatedSpecies(f8posiSpecies,species,f9human_related,f9human_human,col=[0,1,19,20],keepCol=None):
+    '''
+
+    :param f8posiSpecies:
+    :param species:
+    :param f9human_related:
+    :param f9human_human:
+    :param col: [0,1,19,20] tmpac nontmpac tmpspecies nontmpspecies
+    :return:
+    '''
     # species = 'HUMAN'
-    df_info = pd.read_table(f8posiSpecies,header=None)[[0,1,19,20]]
-    df_human_related = df_info[(df_info[19]==species) | (df_info[20]==species)]
-    df_human = df_info[(df_info[19]==species) & (df_info[20]==species)]
+    if keepCol:df_info = pd.read_table(f8posiSpecies,header=None)[keepCol]
+    else:df_info = pd.read_table(f8posiSpecies,header=None)
+    df_human_related = df_info[(df_info[col[2]]==species) | (df_info[col[3]]==species)]
+    df_human = df_info[(df_info[col[2]]==species) & (df_info[col[3]]==species)]
     df_human_related.to_csv(f9human_related,header=None,index=None,sep='\t')
     df_human.to_csv(f9human_human,header=None,index=None,sep='\t')
 def species_pair_count(f8posiSpecies,f8species_pair_count):
@@ -73,13 +97,16 @@ def mergetPfam(fleft,fright,fout):
     # df1.merge(df2).to_csv(fout,sep='\t',header=None,index=None)
     mergeTwo(fleft, fright, fout, left=[1,3], right=[1,2])
 
-def mergeTwo(fleft,fright,fout,left=None,right=None):
+def mergeTwo(fleft,fright,fout,left=None,right=None,keepleft=None,keepright=None):
     # left = None
     # right = [0, 21]
+    # df1 = pd.read_table(fleft,header=None,nrows=10)
     df1 = pd.read_table(fleft,header=None)
-    if left:df1 = df1[left]
+    if left: df1.columns = left
+    if keepleft: df1 = df1[keepleft]
     df2 = pd.read_table(fright,header=None).drop_duplicates()
     if right:df2.columns = right
+    if keepright: df2 = df2[keepright]
     df3 = df1.merge(df2)
     df3.to_csv(fout,sep='\t',header=None,index=None)
     print('left,right,merge: ',df1.shape,df2.shape,df3.shape)
@@ -230,6 +257,8 @@ if __name__ == '__main__':
 
     f11TmpSubcellularCount = os.path.join(dirout, '11TmpSubcellularCount.tsv') # 260
     f11TmpSubcellularRatio = os.path.join(dirout, '11TmpSubcellularRatio.tsv') # 260
+    f11nonTmpSubcellularCount = os.path.join(dirout, '11nonTmpSubcellularCount.tsv')  # (334,)
+    f11nonTmpSubcellularRatio = os.path.join(dirout, '11nonTmpSubcellularRatio.tsv')  # (334,)
 
     f12TmpGO = os.path.join(dirout, '12TmpGO.tsv') # 260
     f12nonTmpGO = os.path.join(dirout, '12nonTmpGO.tsv') # 260
@@ -382,7 +411,9 @@ if __name__ == '__main__':
     # subcelluCount(f8posiSpecies, f11TmpSubcellularCount,6)
     # calculateRatio(f11TmpSubcellularCount,f11TmpSubcellularRatio)
 
-    # f11TmpSubcellularRatio
+    # subcelluCount(f8posiSpecies, f11nonTmpSubcellularCount,12) # (334,)
+    # calculateRatio(f11nonTmpSubcellularCount,f11nonTmpSubcellularRatio)
+
 ############################## go ###################################
 
     # proteinPfam(f1tmp, f12TmpGO, tophit=False, item='GO')
@@ -462,9 +493,87 @@ if __name__ == '__main__':
     #
     # calculateRatio(f15TmpPDB_nontmpPDB_count,f15TmpPDB_nontmpPDB_ratio)
 
+    ################################# negative #########################################
 
-    # df = pd.read_table(f15Tmp_nonTMP_hasPDB, header=None)
+    fin_negaInfo = 'file/2negative/4subcellular/2subcellular_differ.tsv'
+    fall_in = 'file/4train/0/all.txt'
+
+    dirout = 'file/5statistic/negative'
+    check_path(dirout)
+    f1negaInfo = os.path.join(dirout, '1negaInfo.tsv')
+
+    # f8tmp_species = os.path.join(dirout, '8tmp_species.tsv')
+    # f8nontmp_species = os.path.join(dirout, '8nontmp_species.tsv')
+    # f8species = os.path.join(dirout, '8species.tsv')
+    # f8sameSpecies = os.path.join(dirout, '8sameSpecies.tsv')
+    # f8posiSpecies = os.path.join(dirout, '8posiSpecies.tsv')
+    f8tmp_species_count = os.path.join(dirout, '8tmp_species_count.tsv')
+    f8nontmp_species_count = os.path.join(dirout, '8nontmp_species_count.tsv')
+    f8species_count = os.path.join(dirout, '8species_count.tsv')
+    f8species_Ratio = os.path.join(dirout, '8species_Ratio.tsv')
+
+    f9human_related = os.path.join(dirout, '9human_related.tsv')
+    f9human_human = os.path.join(dirout, '9human_human.tsv') # 155
+
+    '''
+    get negative info 
+    '''
+    # df1 = pd.read_table(fin_negaInfo, header=None)
+    # df2 = pd.read_table(fall_in, header=None)
+    # df3 = df2[df2[2]==0][[0,1]]
+    # df3.columns = [0,7]
+    # df4 = df3.merge(df1)
+    # df4.to_csv(f1negaInfo,header=None,index=None,sep='\t')
+    '''
+    count species
+    '''
+    # findSpecies(f1negaInfo,f8species, f8tmp_species, f8nontmp_species, f8sameSpecies,f8posiSpecies)
+    # proteinCount(f8species, f2=f8species_count)
+    # calculateRatio(f8species_count,f8species_Ratio)
+    '''
+    get human related pair
+    '''
+
+    # species = 'HUMAN'
+    # relatedSpecies(f8posiSpecies, species, f9human_related, f9human_human)
+
+    ################################## protein length statistic ###################################################
+
+    f1allinfo = 'file/1positive/1tmp_nontmp_info.tsv' # 87490
+
+
+    foutdir = 'file/1positive/1tmp_nontmp' # 87490
+    check_path(foutdir)
+    f2tmp = os.path.join(foutdir, '2tmp.list')
+    f2nontmp = os.path.join(foutdir, '2nontmp.list')
+    f2all = os.path.join(foutdir, '2all.list')
+    f2tmp_info = os.path.join(foutdir, '2tmp_info.tsv')
+    f2nontmp_info = os.path.join(foutdir, '2nontmp_info.tsv')
+    f2all_info = os.path.join(foutdir, '2all_info.tsv')
+
+    # getproteinlist(f1allinfo,
+    #                ftmp=f2tmp, fnontmp=f2nontmp, fall=f2all,
+    #                ftmp_info=f2tmp_info, ftmp_nontmp_info=f2nontmp_info, fall_info=f2all_info)
+
+    # foutdir = 'file/1positive/1tmp_nontmp/statistic'
+    # check_path(foutdir)
+
+    '''
+    get protein length table
+    '''
+    # f1length = os.path.join(foutdir, '1length.tsv')
+    # df = pd.read_table(f2all_info, header=None,sep=',')
+    # df[[0,2]].sort_values(by=[2],ascending=False).to_csv(f1length,header=None,index=None,sep='\t')
+
+    ########################################################################################
+
+    # countline(fin)
+
+
+
+    # df = pd.read_table(f4caseStudyPair_onlyOnePDB,header=None)
     # df1.to_csv(fout,header=None,index=None,sep='\t')
+
     print('stop', time.strftime('%Y-%m-%d %H:%M:%S', time.localtime()))
     print('time', time.time() - start)
 

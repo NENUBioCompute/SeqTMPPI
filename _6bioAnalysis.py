@@ -13,7 +13,7 @@ import time
 import pandas as pd
 
 from _5statistic import subcelluCount, calculateRatio
-from common import saveList, readIDlist
+from common import saveList, readIDlist, check_path
 
 
 def mapKid_pathway(kid,df_kid_pid=None):
@@ -275,16 +275,48 @@ if __name__ == '__main__':
     screen pair with KEGG pathway in disease and PDB-PDB
     '''
 
-    df1 = pd.read_table(f3pairInDiseasePath,header=None)
-    df2 = pd.read_table(f_posiPDB_PDB,header=None)
-    df2.columns = [0,1,3,4]
-    df = df1.merge(df2,on=[0,1])
-    df[5] = df[3].apply(lambda x:len(eval(x)))
-    df[6] = df[4].apply(lambda x:len(eval(x)))
-    df.to_csv(f4caseStudyPair,header=None,index=None,sep='\t')
+    # df1 = pd.read_table(f3pairInDiseasePath,header=None)
+    # df2 = pd.read_table(f_posiPDB_PDB,header=None)
+    # df2.columns = [0,1,3,4]
+    # df = df1.merge(df2,on=[0,1])
+    # df[5] = df[3].apply(lambda x:len(eval(x)))
+    # df[6] = df[4].apply(lambda x:len(eval(x)))
+    # df.to_csv(f4caseStudyPair,header=None,index=None,sep='\t')
+    #
+    # df[(df[5]==1)&(df[6]==1)].to_csv(f4caseStudyPair_onlyOnePDB,header=None,index=None,sep='\t')
+    # df[(df[5]==1)&(df[6]==1)].drop_duplicates(subset=[3,4]).to_csv(f4caseStudyPair_onlyOnePDB_norepeat,header=None,index=None,sep='\t')
 
-    df[(df[5]==1)&(df[6]==1)].to_csv(f4caseStudyPair_onlyOnePDB,header=None,index=None,sep='\t')
-    df[(df[5]==1)&(df[6]==1)].drop_duplicates(subset=[3,4]).to_csv(f4caseStudyPair_onlyOnePDB_norepeat,header=None,index=None,sep='\t')
+    '''
+    cytoscape hubbaTable
+    find hub node
+    '''
+    dir_cytoscape = 'file/6bioAnalysis/cytoscape/'
+    f5_cyto_hub = os.path.join(dir_cytoscape,'HubbaTable.csv')
+    f5_cyto_hub_max100 = os.path.join(dir_cytoscape,'hub_max10000')
+    check_path(f5_cyto_hub_max100)
+
+    columns = ['name', 'Betweenness', 'BottleNeck', 'Closeness',
+       'ClusteringCoefficient', 'Degree', 'DMNC', 'EcCentricity', 'EPC', 'MCC',
+       'MNC', 'Radiality', 'Stress']
+
+    df = pd.read_table(f5_cyto_hub,sep=',')
+    for idx in df.columns:
+        if idx == 'name':continue
+        fout = os.path.join(f5_cyto_hub_max100,'%s.tsv'%idx)
+        df1 = df[['name',idx]].sort_values(by=[idx],ascending=False)[:10000]
+        if df1[idx].max()==df1[idx].min():continue
+        df1.to_csv(fout, index=None, sep='\t')
+
+    df0 = pd.read_table(os.path.join(f5_cyto_hub_max100,'Betweenness.tsv'))
+    for eachfile in os.listdir(f5_cyto_hub_max100):
+        if eachfile =='Betweenness.tsv':continue
+        df = pd.read_table(os.path.join(f5_cyto_hub_max100,eachfile))
+        df0 = df0.merge(df)
+        print('%s\t%s\t%s'%(eachfile,df.shape,df0.shape))
+    fout = os.path.join(dir_cytoscape, 'hub_max10000.tsv')
+    df0.to_csv(fout,index=None,sep='\t')
+
+
 
     # df = pd.read_table(f4caseStudyPair_onlyOnePDB,header=None)
     # df1.to_csv(fout,header=None,index=None,sep='\t')
