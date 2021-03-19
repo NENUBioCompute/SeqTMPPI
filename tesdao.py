@@ -1,4 +1,7 @@
 from DatabaseOperation2 import DataOperation
+from dao import queryProtein, ensomblePortein
+
+
 def getPfam(dbref):
     '''
     :param dbref:
@@ -26,18 +29,11 @@ def addProteinPfam():
 def funcPfam(x):
     return x
 if __name__ == '__main__':
-    ac = 'P03372'
-    do = DataOperation('uniprot', 'uniprot_sprot')
-    result = queryPfam(ac, do, tophit=True)
 
-    # pa = 'P03372'
-    # # projcetion = {'dbReference':True,'_id':False}
-    # dic = {'accession':pa,'dbReference.@type':'Pfam'}
-    # do = DataOperation('uniprot', 'uniprot_sprot')
-    # qa = do.QueryObj(dic)
-    # for q in qa:
-    #     dbReference = q['dbReference']
-    #     # {'@type': 'Pfam', '@id': 'PF18424', 'property': [{'@type': 'entry name', '@value': 'a_DG1_N2'}
-    #     #  {'@type': 'Pfam', '@id': 'PF12743', 'property': [{'@type': 'entry name', '@value': 'ESR1_C'}, {'@type': 'match status', '@value': '1'}]}
-    #     result = getPfam(dbReference)
-    #     print(result)
+    do = DataOperation('uniprot', 'uniprot_sprot')
+    projection = {'_id': True, 'sequence.@length': True, 'sequence.#text': True, 'keyword.@id': True,
+                  'comment.subcellularLocation.location': True}
+    AC = 'Q13206'
+    pro = queryProtein(AC, do, projection=projection)
+    pro['accession'] = AC
+    proinfo = ensomblePortein(pro)

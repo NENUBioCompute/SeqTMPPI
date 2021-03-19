@@ -55,7 +55,7 @@ if __name__ == '__main__':
     get TMP, nonTMP list
     query 5208 tmp and 15186 nontmp
     '''
-    generateSomeSpeciesLists(f1tmp, f1nontmp)
+    # generateSomeSpeciesLists(f1tmp, f1nontmp)
     '''
     get single info
     '''

@@ -9,7 +9,9 @@ import os
 def check_path(in_dir):
     if '.' in in_dir:
         in_dir,_ = os.path.split(in_dir)
-    if not os.path.exists(in_dir):os.makedirs(in_dir)
+    if not os.path.exists(in_dir):
+        os.makedirs(in_dir)
+        print('make dir ',in_dir)
 def processPair(line,sep):
     return line[:-1].split(sep)
 def processTXTbyLine(fin,func,sep,title=True):

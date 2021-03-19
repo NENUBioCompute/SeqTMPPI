@@ -7,8 +7,9 @@ from dataset import extractPairAndFasta, getproteinlist, simplifyTable, handleRo
 
 def handlePair(foutdir,sep=',',dbname=None,
                checkTMP = True,jumpStep=None,
-               fin = None,f2tmp_nonTtmp_info_qualified=None):
+               fin = None,f2tmp_nonTtmp_info_qualified=None,keepOne=False):
     '''
+    数据量较少，直接逐行查询，很多蛋白被查询了多次
     :param foutdir:
     :param sep: sep of fin file
     :parameter dbname: name of mongodb
@@ -48,7 +49,7 @@ def handlePair(foutdir,sep=',',dbname=None,
     time 1766.4131457805634
     '''
     if jumpStep==None or 1 not in jumpStep:
-        getPairInfo_TMP_nonTMP(fin, f1tmp_nontmp_info, sep=sep,checkTMP=checkTMP)
+        getPairInfo_TMP_nonTMP(fin, f1tmp_nontmp_info, sep=sep,checkTMP=checkTMP,keepOne=keepOne)
         simplifyTable(f1tmp_nontmp_info, f1TMP_nonTMP)
     '''
     2. get qualified tmp nontmp pair

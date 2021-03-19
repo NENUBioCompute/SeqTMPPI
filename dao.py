@@ -31,7 +31,7 @@ def checkTaN(keywordDic):
         if keywordDic['@id'] == 'KW-0812':
             return True
     return False
-def getTaN(pa,pb,do,checkTMP=True):
+def getTaN(pa,pb,do,checkTMP=True,keepOne=False):
     '''
 
     :param pa:
@@ -40,8 +40,8 @@ def getTaN(pa,pb,do,checkTMP=True):
     :return: TMP
     '''
     projection = {'_id':True,'sequence.@length':True,'sequence.#text':True,'keyword.@id':True,'comment.subcellularLocation.location':True}
-    qa = queryProtein(pa, do,projection=projection)
-    qb = queryProtein(pb, do,projection=projection)
+    qa = queryProtein(pa, do,projection=projection,keepOne=keepOne)
+    qb = queryProtein(pb, do,projection=projection,keepOne=keepOne)
     if qa==None or qb==None:return None
     # projection = {'_id': True, 'sequence.@length': True, 'sequence.#text': True, 'keyword.@id': True,
     #               'comment.subcellularLocation.location.#text': True}
@@ -57,7 +57,7 @@ def getTaN(pa,pb,do,checkTMP=True):
     else:return qa,qb
     return None
 
-def queryProtein(AC,do,projection=None):
+def queryProtein(AC,do,projection=None,keepOne=False):
     '''
     dao
     :param AC:
@@ -76,6 +76,7 @@ def queryProtein(AC,do,projection=None):
             print('%s is more than one entry'%AC)
             return None
         protein = doc
+        if keepOne:return protein
     return protein
 
 def ensomblePortein(pro):
@@ -110,16 +111,31 @@ def getSubcelllist(comment,keys=['subcellularLocation','location','#text']):
         [{}, {'subcellularLocation': {'location': {'@evidence': '2', '#text': 'Cell inner membrane'}}}, {}, {}, {}, {}, {}]
         [{}, {}, {'subcellularLocation': {'location': 'Periplasm'}}, {'subcellularLocation': [{'location': 'Secreted'}, {'location': 'Cell surface'}]}, {'subcellularLocation': {'location': {'@evidence': '14', '#text': 'Cell outer membrane'}}}, {}, {}, {}, {}, {}, {}]
         projection 'comment.subcellularLocation.location':True
+
+        {'subcellularLocation': {'location': [{'@evidence': '1', '#text': 'Secreted'},
+   {'@evidence': '1', '#text': 'Cell wall'}]}}
+
     :return:
+
+
     '''
+    # subcellularLocations = []
+    # for comm in comment:
+    #     if comm == {}:continue
+    #     result = handleSubcelluarLeaf(comm,keys=keys)
+    #     if result !=None:
+    #         for r in result:
+    #             subcellularLocations.append(r)
+    #     return list(set(subcellularLocations))
+
+
     subcellularLocations = []
-    for comm in comment:
-        if comm == {}:continue
-        result = handleSubcelluarLeaf(comm,keys=keys)
-        if result !=None:
-            for r in result:
-                subcellularLocations.append(r)
-        return list(set(subcellularLocations))
+    result = handleSubcelluarLeaf(comment,keys=keys)
+    if result !=None:
+        for r in result:
+            subcellularLocations.append(r)
+    return list(set(subcellularLocations))
+
 ############################# end  subcellularLocation ###########################
 def proteinPfam(fin,fout,tophit=True,item='Pfam'):
     do = DataOperation('uniprot', 'uniprot_sprot')
@@ -190,9 +206,10 @@ def queryPfam(ac,do,tophit=False,item='Pfam'):
 def getPairInfo(fin,fout,sep='\t'):
     getPairInfo_TMP_nonTMP(fin, fout, sep=sep, checkTMP=False)
 
-def getSingleInfo(fin, fout,fin_type='single'):
+
+def getSingleInfo(fin, fout,fin_type='single',col=[0,1]):
     if fin_type == 'pair':
-        df = pd.read_table(fin, header=None)[[0,1]]
+        df = pd.read_table(fin, header=None)[col]
         dat = df.to_numpy().reshape(1,-1)
         proteins = set(dat[0])
     elif fin_type == 'single':
@@ -221,7 +238,7 @@ def getFasta(fin_all_protein,fout):
             pro = queryProtein(AC,do,projection=projection)
             fo.write('>%s\n%s\n'%(AC,pro['sequence.#text']))
             fo.flush()
-def getPairInfo_TMP_nonTMP(fin,fout,sep='\t',checkTMP=True):
+def getPairInfo_TMP_nonTMP(fin,fout,sep='\t',checkTMP=True,keepOne=False):
     '''
 
     :param fin:
@@ -241,7 +258,7 @@ def getPairInfo_TMP_nonTMP(fin,fout,sep='\t',checkTMP=True):
     with open(fout,'w') as fo:
         for pa,pb in getPairs(fin, sep=sep, title=False):
             print('%s\t%s'%(pa,pb))
-            result = getTaN(pa,pb,do,checkTMP=checkTMP)
+            result = getTaN(pa,pb,do,checkTMP=checkTMP,keepOne=keepOne)
             if result==None:continue
             tmp = ensomblePortein(result[0])
             nontmp = ensomblePortein(result[1])
@@ -253,6 +270,7 @@ def getPairInfo_TMP_nonTMP(fin,fout,sep='\t',checkTMP=True):
                 fo.write('\t')
             fo.write('\n')
             fo.flush()
+
 def tagPair(pa,pb,do):
     '''
 

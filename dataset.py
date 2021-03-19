@@ -97,16 +97,19 @@ def handleRow(fin,fout,calcuSubcell):
     # handleRow(fin, fout,calcuSubcell)
     df = pd.read_csv(fin, sep='\t', header=None)
     df_subcel = df.apply(lambda x:calcuSubcell(x),axis=1)
+    df_subcel = df_subcel.dropna()
     df_subcel.to_csv(fout, header=None, index=None, sep='\t')
     print(df_subcel.shape)
 
 def calcuSubcell(x):
+    if x[5] == 'None' or x[12] == 'None':return None
     tmp = set(eval(x[5]))
     nontmp = set(eval(x[12]))
-    print(tmp & nontmp)
-    print(tmp | nontmp)
-    print(tmp - nontmp)
-    print(nontmp - tmp)
+    print(x[0],x[7])
+    # print(tmp & nontmp)
+    # print(tmp | nontmp)
+    # print(tmp - nontmp)
+    # print(nontmp - tmp)
     x[14] = list(tmp & nontmp)
     x[15] = list(tmp | nontmp)
     x[16] = list(tmp - nontmp)
