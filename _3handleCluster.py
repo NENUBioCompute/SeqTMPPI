@@ -97,7 +97,7 @@ def pairWithClusterLable(fin_pair,fin_cluster_tmp_tsv,fin_cluster_nontmp_tsv,fou
     if fout_clus !=None: df5.to_csv(fout_clus, index=False, header=False, sep='\t')
     if fout !=None: df6.to_csv(fout, index=False, header=False, sep='\t')
     return df6
-def saveRelated(f3pair,f4pair,f4posi,f4nega):
+def saveRelated_posi_nega(f3pair,f4pair,f4posi,f4nega):
     # f4pair = 'file/3cluster/4pair.tsv'
     # f4posi = 'file/3cluster/4posi.tsv'
     # f4nega = 'file/3cluster/4nega.tsv'
@@ -156,4 +156,4 @@ if __name__ == '__main__':
     '''
     extract positive,negative
     '''
-    # saveRelated(f3pair,f4pair,f4posi,f4nega)
+    # saveRelated_posi_nega(f3pair,f4pair,f4posi,f4nega)

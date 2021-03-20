@@ -167,6 +167,9 @@ def diseasePathway(dirin,fout):
     df.to_csv(fout,header=None,index=None,sep='\t')
 
 
+######################################## end of  handle data from cytoscape hubbaTable ##########################
+
+
 def funCheckDisease(x,diseaseList):
     diseasePath = []
     for x in eval(x):
@@ -174,11 +177,7 @@ def funCheckDisease(x,diseaseList):
             diseasePath.append(x)
     return None if diseasePath==[] else diseasePath
 
-
-if __name__ == '__main__':
-    print('start', time.strftime('%Y-%m-%d %H:%M:%S', time.localtime()))
-    start = time.time()
-
+def _1main():
     dirin = 'file/5statistic/positive'
     f_posiGeneIDinfo = os.path.join(dirin, '14posiGeneIDinfo.tsv')  #
     f_posiPDB_PDB = os.path.join(dirin, '15Tmp_nonTMP_hasPDB.tsv')  #
@@ -193,7 +192,6 @@ if __name__ == '__main__':
 
     dirKeegPathway = os.path.join(dirKeegOut, 'pathwayInfo')
 
-
     dirout = 'file/6bioAnalysis/positive'
     f1pahwayInfo = os.path.join(dirout, '1pahwayInfo.tsv')
 
@@ -203,7 +201,7 @@ if __name__ == '__main__':
     f2pahwayHasOverlapRatio = os.path.join(dirout, '2pahwayHasOverlapRatio.tsv')
 
     f3pairInDiseasePath = os.path.join(dirout, '3pairInDiseasePath.tsv')
-    f3pairInDiseasePath_count = os.path.join(dirout, '3pairInDiseasePath_count.tsv') #(201,)
+    f3pairInDiseasePath_count = os.path.join(dirout, '3pairInDiseasePath_count.tsv')  # (201,)
     f3pairInDiseasePath_ratio = os.path.join(dirout, '3pairInDiseasePath_ratio.tsv')
     f3pairInDiseasePath_ratio_info = os.path.join(dirout, '3pairInDiseasePath_ratio_info.tsv')
 
@@ -211,11 +209,7 @@ if __name__ == '__main__':
     f4caseStudyPair_onlyOnePDB = os.path.join(dirout, '4caseStudyPair_onlyOnePDB.tsv')
     f4caseStudyPair_onlyOnePDB_norepeat = os.path.join(dirout, '4caseStudyPair_onlyOnePDB_norepeat.tsv')
 
-
-
-
-
-################################### kegg db ##############################
+    ################################### kegg db ##############################
     # queryPathway_Gene(f_keegdb_1pathway_gene_info_human,
     #                   fpathway=f_keegdb_1pathway_human,
     #                   fpathwayInfo=f_keegdb_1pathway_human_info,
@@ -227,13 +221,13 @@ if __name__ == '__main__':
 
     # diseasePathway(dirKeegPathway, f_keegdb_3pathway_disease)
 
-################################## statistic #############################
+    ################################## statistic #############################
     # mergePathway(f_keegdb_2pid_gid, f_posiGeneIDinfo,f1pahwayInfo) # 87.1s
     # pathwayOverlap(f1pahwayInfo, f2pahwayOverlap)
 
     # subcelluCount(f2pahwayHasOverlap, f2pahwayHasOverlapCount, 4) # (231,)
     # calculateRatio(f2pahwayHasOverlapCount,f2pahwayHasOverlapRatio)
-##################### pair of pathway in disease #########################
+    ##################### pair of pathway in disease #########################
     '''
     get disease related pathway list
     '''
@@ -285,38 +279,53 @@ if __name__ == '__main__':
     #
     # df[(df[5]==1)&(df[6]==1)].to_csv(f4caseStudyPair_onlyOnePDB,header=None,index=None,sep='\t')
     # df[(df[5]==1)&(df[6]==1)].drop_duplicates(subset=[3,4]).to_csv(f4caseStudyPair_onlyOnePDB_norepeat,header=None,index=None,sep='\t')
-
+    ######################################## handle data from cytoscape hubbaTable ##########################
     '''
     cytoscape hubbaTable
     find hub node
     '''
-    dir_cytoscape = 'file/6bioAnalysis/cytoscape/'
-    f5_cyto_hub = os.path.join(dir_cytoscape,'HubbaTable.csv')
-    f5_cyto_hub_max100 = os.path.join(dir_cytoscape,'hub_max10000')
-    check_path(f5_cyto_hub_max100)
+    # dir_cytoscape = 'file/6bioAnalysis/cytoscape/'
+    # f5_cyto_hub = os.path.join(dir_cytoscape,'HubbaTable.csv')
+    # f5_cyto_hub_max100 = os.path.join(dir_cytoscape,'hub_max10000')
+    # check_path(f5_cyto_hub_max100)
+    #
+    # columns = ['name', 'Betweenness', 'BottleNeck', 'Closeness',
+    #    'ClusteringCoefficient', 'Degree', 'DMNC', 'EcCentricity', 'EPC', 'MCC',
+    #    'MNC', 'Radiality', 'Stress']
 
-    columns = ['name', 'Betweenness', 'BottleNeck', 'Closeness',
-       'ClusteringCoefficient', 'Degree', 'DMNC', 'EcCentricity', 'EPC', 'MCC',
-       'MNC', 'Radiality', 'Stress']
-
-    df = pd.read_table(f5_cyto_hub,sep=',')
-    for idx in df.columns:
-        if idx == 'name':continue
-        fout = os.path.join(f5_cyto_hub_max100,'%s.tsv'%idx)
-        df1 = df[['name',idx]].sort_values(by=[idx],ascending=False)[:10000]
-        if df1[idx].max()==df1[idx].min():continue
-        df1.to_csv(fout, index=None, sep='\t')
-
-    df0 = pd.read_table(os.path.join(f5_cyto_hub_max100,'Betweenness.tsv'))
-    for eachfile in os.listdir(f5_cyto_hub_max100):
-        if eachfile =='Betweenness.tsv':continue
-        df = pd.read_table(os.path.join(f5_cyto_hub_max100,eachfile))
-        df0 = df0.merge(df)
-        print('%s\t%s\t%s'%(eachfile,df.shape,df0.shape))
-    fout = os.path.join(dir_cytoscape, 'hub_max10000.tsv')
-    df0.to_csv(fout,index=None,sep='\t')
+    # df = pd.read_table(f5_cyto_hub,sep=',')
+    # for idx in df.columns:
+    #     if idx == 'name':continue
+    #     fout = os.path.join(f5_cyto_hub_max100,'%s.tsv'%idx)
+    #     df1 = df[['name',idx]].sort_values(by=[idx],ascending=False)[:10000]
+    #     if df1[idx].max()==df1[idx].min():continue
+    #     df1.to_csv(fout, index=None, sep='\t')
+    #
+    # df0 = pd.read_table(os.path.join(f5_cyto_hub_max100,'Betweenness.tsv'))
+    # for eachfile in os.listdir(f5_cyto_hub_max100):
+    #     if eachfile =='Betweenness.tsv':continue
+    #     df = pd.read_table(os.path.join(f5_cyto_hub_max100,eachfile))
+    #     df0 = df0.merge(df)
+    #     print('%s\t%s\t%s'%(eachfile,df.shape,df0.shape))
+    # fout = os.path.join(dir_cytoscape, 'hub_max10000.tsv')
+    # df0.to_csv(fout,index=None,sep='\t')
 
 
+
+if __name__ == '__main__':
+    print('start', time.strftime('%Y-%m-%d %H:%M:%S', time.localtime()))
+    start = time.time()
+
+    from scipy import stats
+
+    # 需要注意的是16是由17-1得到的
+    # set	in set	background	in background
+    # a = stats.hypergeom.sf(16, 3586, 141, 59)
+    a = stats.hypergeom.sf(16, 3586, 141, 59)
+    # 119	148	1735	8041 1.55E-53
+    print(a)
+
+    # kegg enrichment
 
     # df = pd.read_table(f4caseStudyPair_onlyOnePDB,header=None)
     # df1.to_csv(fout,header=None,index=None,sep='\t')
