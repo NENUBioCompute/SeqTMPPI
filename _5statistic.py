@@ -136,14 +136,15 @@ def dropNul(fin,fout):
     df1 = df.dropna()
     df1.to_csv(fout,header=None,index=None,sep='\t')
     print(df1.shape)
-def mergeThree(fpair,ftmpinfo,fnontmpinfo,fout):
-    df = pd.read_table(fpair, header=None)[[0,1]]
+def mergeThree(fpair,ftmpinfo,fnontmpinfo,fout,saveColumn =[0,1],sep='\t'):
+    df = pd.read_table(fpair, header=None,sep=sep)[saveColumn]
     df_tmp = pd.read_table(ftmpinfo, header=None)
     df_tmp.columns=[0,2]
     df_nontmp = pd.read_table(fnontmpinfo, header=None)
     df_nontmp.columns=[1,3]
     df_pair = df.merge(df_tmp).merge(df_nontmp).dropna()
     print(df_pair.shape)
+    df_pair = df_pair.reindex(columns=range(df_pair.shape[1]))
     df_pair.to_csv(fout,header=None,index=None,sep='\t')
 
 def getPDBPair(fin,fout):
@@ -232,6 +233,8 @@ if __name__ == '__main__':
     f8nontmp_species_count = os.path.join(dirout, '8nontmp_species_count.tsv')
     f8species_count = os.path.join(dirout, '8species_count.tsv')
     f8species_Ratio = os.path.join(dirout, '8species_Ratio.tsv')
+    f8tmp_species_Ratio = os.path.join(dirout, '8tmp_species_Ratio.tsv')
+    f8nontmp_species_Ratio = os.path.join(dirout, '8nontmp_species_Ratio.tsv')
 
     f8species_pair_count = os.path.join(dirout, '8species_pair_count.tsv')
 
@@ -384,6 +387,9 @@ if __name__ == '__main__':
     # proteinCount(f8species,f2=f8species_count)
     # calculateRatio(f8species_count,f8species_Ratio)
 
+    calculateRatio(f8tmp_species_count,f8tmp_species_Ratio)
+    calculateRatio(f8nontmp_species_count,f8nontmp_species_Ratio)
+
     # species_pair_count(f8posiSpecies, f8species_pair_count)
 
 
@@ -484,6 +490,8 @@ if __name__ == '__main__':
 
     # getPDBPair(f15Tmp_nonTMP_hasPDB, f15TmpPDB_nontmpPDB)
 
+
+
     '''
     time 249.97137308120728
     '''
@@ -566,6 +574,7 @@ if __name__ == '__main__':
     # df[[0,2]].sort_values(by=[2],ascending=False).to_csv(f1length,header=None,index=None,sep='\t')
 
     ########################################################################################
+    # target in durgdb
 
     # countline(fin)
 

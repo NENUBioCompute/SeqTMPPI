@@ -3,6 +3,9 @@
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/release" />
+      <excludeFolder url="file://$MODULE_DIR$/tool/pfam" />
+      <excludeFolder url="file://$MODULE_DIR$/tool/contact-kegg" />
+      <excludeFolder url="file://$MODULE_DIR$/tool/coQ" />
     </content>
     <orderEntry type="jdk" jdkName="SeqTMPPI (sftp://jjhnenu@39.97.240.2:22/usr/bin/python)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />

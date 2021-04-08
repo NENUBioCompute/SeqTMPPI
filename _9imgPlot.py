@@ -191,9 +191,23 @@ if __name__ == '__main__':
     '''
     tmp subcell tree plot
     '''
-    f2subcellu_venn = os.path.join(foutdir, '7subcell_tree.png')
-    fin_tmp_subcell = 'file/5statistic/positive/11TmpSubcellularCount.tsv'
-    treemapPlot(fin_tmp_subcell,10, title='')
+    # f2subcellu_venn = os.path.join(foutdir, '7subcell_tree.png')
+    # fin_tmp_subcell = 'file/5statistic/positive/11TmpSubcellularCount.tsv'
+    # treemapPlot(fin_tmp_subcell,10, title='')
+
+    '''
+    tmp nontmp drug target 
+    '''
+    # fout = 'file/otherfile/1drugtarget.list'
+    # fins = ['file/5statistic/positive/1tmp.list',
+    # 'file/5statistic/positive/2gpcr.list',
+    # 'file/5statistic/positive/10allGprotein.tsv',
+    # 'file/5statistic/positive/1nontmp.list',
+    #         'file/otherfile/1drugtarget.list']
+    # names = ['Transmembrane Protein','GPCR Protein','G protein','nonTransmembrane Protein','Drug Target']
+
+    # f7proteinType = os.path.join(foutdir, '7proteinType_drug_venn.png')
+    # plotVenn(fins, names, f7proteinType)
 
 
     pass

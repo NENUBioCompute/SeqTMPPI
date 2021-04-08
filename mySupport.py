@@ -10,6 +10,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from keras import models
+# from tensorflow.keras.models import load_model
 
 from calculate_performance import calculate_performance
 from common import handleBygroup, check_path
@@ -133,19 +134,24 @@ def groupCalculate(dirin,filetype='all'):
         t.to_csv(os.path.join(dirout, 'result.csv'),index=True, header=True)
         print(dirout)
 
-def savepredict(fin_pair,dir_in,fin_model,dirout_result,batch_size=90,limit=0):
+def savepredict(fin_pair,dir_in,fin_model,dirout_result,batch_size=90,limit=0,posi=False):
     # fin_pair = '/home/19jiangjh/data/PPI/release/pairdata/p_fw/1/0/test.txt'
     # dir_in = '/home/19jiangjh/data/PPI/release/feature/p_fp_fw_19471'
     # fin_model = '/home/19jiangjh/data/PPI/release/result_in_paper/alter_ratio/p_fw_train_validate/1/_my_model.h5'
     # dirout_result = '/home/19jiangjh/data/PPI/release/result_in_paper/alter_ratio/p_fw_train_validate/1/test'
     check_path(dirout_result)
     print('predict ',fin_pair,'...')
+    print('save result in ',dirout_result)
     df = pd.read_table(fin_pair, header=None)
-    if df.shape[1]!=3:df[2]=0
+    if df.shape[1]!=3:
+        df[2]=1 if posi else 0
     onehot = True
     dataarray = BaseData().loadTest(fin_pair, dir_in,onehot=onehot,is_shuffle=False,limit=limit)
     x_test, y_test =dataarray
+    print('load model...')
+    # model = load_model(fin_model, custom_objects=MyEvaluate.metric_json)
     model = models.load_model(fin_model, custom_objects=MyEvaluate.metric_json)
+
     model.compile(loss='binary_crossentropy',
                   optimizer='adam',
                   metrics=MyEvaluate.metric)

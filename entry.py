@@ -25,7 +25,7 @@ def getGroupResult(group_dir_pair,model_type = Param.CNN1D,limit=0,onehot=False,
     func = entry
     dir_in = group_dir_pair.replace(src, 'feature')
     handleBygroup(group_dir_pair, src, des, func,dir_in,model_type = model_type,limit=limit,onehot=onehot)
-def entry(dirout,fin_pair,dir_in,model_type = Param.CNN1D,limit=0,onehot=False,kernel_size = 3,epochs=60,filters = 250,batch_size = 100,validate=None):
+def entry(dirout,fin_pair,dir_in,model_type = Param.CNN1D,limit=0,onehot=False,kernel_size = 3,epochs=60,filters = 250,batch_size = 100,validate=None,fin_model=None):
     '''
     :param dirout:
     :param fin_pair:
@@ -38,6 +38,7 @@ def entry(dirout,fin_pair,dir_in,model_type = Param.CNN1D,limit=0,onehot=False,k
     :param filters:
     :param batch_size:
     :param validate:
+    :param fin_model: if not none , reload model and train
     :return:
     '''
     # model_type = Param.CNN1D
@@ -68,7 +69,7 @@ def entry(dirout,fin_pair,dir_in,model_type = Param.CNN1D,limit=0,onehot=False,k
                     hidden_dims = 250,
                     batch_size = batch_size,
                     epochs = epochs,)
-    mm.process(dirout,x_train, y_train, x_test, y_test)
+    mm.process(dirout,x_train, y_train, x_test, y_test,fin_model=fin_model)
     print('save result to %s'%dirout)
 def main(limit=5):
 # if __name__ == '__main__':

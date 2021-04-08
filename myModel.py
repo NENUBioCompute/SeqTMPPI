@@ -58,20 +58,23 @@ class MyModel(object):
             pass
         return wrapper
 
-    def process(self,fout,x_train, y_train, x_test,y_test):
+    def process(self,fout,x_train, y_train, x_test,y_test,fin_model=None):
         if self.model_type == Param.CNN_LSTM:
             fixlen = int(self.input_shape[0]/2)
             x_train = [x_train[:,:fixlen],x_train[:,fixlen:]]
             x_test = [x_test[:,:fixlen],x_test[:,fixlen:]]
         print('x_train.shape,x_test.shape',x_train[0].shape,x_test[0].shape)
-        self.loadModel()
+        if fin_model:self.loadExistModel(fin_model)
+        else:self.loadModel()
         self.complie()
         self.fit(x_train,y_train,validation_data=(x_test, y_test))
         self.save_model(fout)
         self.save_result(fout,x_test,y_test)
         # plot_result(self.history.history,fout)
+
     def process_re_emerge(self,fin_model,x_test,y_test):
         self.loadExistModel(fin_model)
+        self.complie()
         print(self.evaluate(x_test, y_test))
 
     # support process
@@ -108,7 +111,8 @@ class MyModel(object):
                             batch_size=self.batch_size,
                             epochs=self.epochs,
                             validation_data=validation_data,
-                            callbacks=[EarlyStopping(monitor='loss', patience=3,min_delta=0.00003)]
+                            # callbacks=[EarlyStopping(monitor='loss', patience=3,min_delta=0.00003)]
+                            callbacks=[EarlyStopping(monitor='loss', patience=10,min_delta=0.000003)]
                                        )
 
     def save_model(self,fout):
@@ -183,7 +187,17 @@ class MyModel(object):
 
 
     def LSTM(self):
-        pass
+
+        model = Sequential()
+        model.add(
+            LSTM(128,
+                 input_shape=self.input_shape,
+                 activation='relu',
+                 return_sequences=True))
+            # LSTM(filters=self.filters, kernel_size=self.kernel_size, activation='relu', input_shape=self.input_shape))
+        model.add(GlobalAveragePooling1D())
+        model.add(Dense(1, activation='sigmoid'))
+        return model
 
     def DNN(self):
         pass

@@ -181,7 +181,6 @@ class BaseData:
             count = count +1
             eachfile = os.path.join(dir_in, '%s_%s.npy' % (proteins[0], proteins[1]))
             # print(count,eachfile)
-            if count == limit:break
             try:
                 # elem = np.load(os.path.join(dir_in, eachfile))
                 elem = np.load(eachfile)
@@ -193,6 +192,7 @@ class BaseData:
                     y_test.append(0)
             except:
                 print('not find feature of this pair', str(proteins))
+            if count == limit:break
         data = np.array(x_test)
         label = np.array(y_test)
         return self.subprocess(data,label,test_size=0, random_state=123,onehot=onehot,is_shuffle=is_shuffle)

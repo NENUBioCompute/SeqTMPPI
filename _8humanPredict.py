@@ -13,7 +13,9 @@ from FeatureDealer import BaseFeature, Feature_type
 # from mySupport import savepredict
 # from negativeData import dropPositiveAndRepeate
 from PairDealer import PairDealer
+from _5statistic import subcelluCount, calculateRatio, dropNul, mergeThree, getPDBPair, mergeTwo
 from common import check_path
+from dao import proteinPfam
 from mySupport import savepredict
 
 if __name__ == '__main__':
@@ -24,10 +26,10 @@ if __name__ == '__main__':
     dir_feature_db = '/home/19jjhnenu/Data/SeqTMPPI2W/featuredb/human/'
     dirout_feature = '/home/19jjhnenu/Data/SeqTMPPI2W/feature/human1/'
     fin_model = '/home/19jjhnenu/Data/SeqTMPPI2W/result/129878/_my_model.h5'
-    dirout_result = '/home/19jjhnenu/Data/SeqTMPPI2W/result/129878/testHuman'
+    dirout_result = '/home/19jjhnenu/Data/SeqTMPPI2W/result/129878/testHuman01'
 
     fin_model_group0 = '/home/19jjhnenu/Data/SeqTMPPI2W/result/group/0/_my_model.h5'
-    dirout_result_group0 = '/home/19jjhnenu/Data/SeqTMPPI2W/result/group/0/testHuman'
+    dirout_result_group0 = '/home/19jjhnenu/Data/SeqTMPPI2W/result/group/0/testHuman01'
 
     dirout = 'file/8humanPredict'
     f1tmp = os.path.join(dirout,'1tmp.list')
@@ -107,17 +109,17 @@ if __name__ == '__main__':
     '''
     testing on the model
     '''
-    import os
-    import tensorflow as tf
+    # import os
+    # import tensorflow as tf
 
-    gpu_id = '0,1,2,3'
-    gpu_id = '6,7'
-    os.environ['CUDA_VISIBLE_DEVICES'] = str(gpu_id)
-    os.system('echo $CUDA_VISIBLE_DEVICES')
-
-    tf_config = tf.compat.v1.ConfigProto()
-    tf_config.gpu_options.allow_growth = True
-    tf.compat.v1.Session(config=tf_config)
+    # gpu_id = '0,1,2,3'
+    # gpu_id = '6,7'
+    # os.environ['CUDA_VISIBLE_DEVICES'] = str(gpu_id)
+    # os.system('echo $CUDA_VISIBLE_DEVICES')
+    #
+    # tf_config = tf.compat.v1.ConfigProto()
+    # tf_config.gpu_options.allow_growth = True
+    # tf.compat.v1.Session(config=tf_config)
 
     print('testing the model')
     # savepredict(f4sample1k, dirout_feature, fin_model, dirout_result,batch_size=500)
@@ -128,6 +130,57 @@ if __name__ == '__main__':
     # savepredict(f4sample1k, dirout_feature, fin_model_group0, dirout_result_group0,batch_size=500)
 
 
+    # ##################### pdb on test human start ###########
+    # fposi = 'file/8humanPredict/3batchData/3batchData'
+    fposi = '/home/jjhnenu/SeqTMPPI20201226/file/8humanPredict/pdb/result_pdb_pair/result_queryPDB.csv'
+
+    dirout = os.path.join(dirout,'pdb')
+    check_path(dirout)
+    f15TmpPDB = os.path.join(dirout, '15TmpPDB.tsv') #
+    f15nonTmpPDB = os.path.join(dirout, '15nonTmpPDB.tsv') #
+    f15TmpPDBCount = os.path.join(dirout, '15TmpPDBCount.tsv') # 11473
+    f15nonTmpPDBCount = os.path.join(dirout, '15nonTmpPDBCount.tsv') # 47124
+    f15TmpPDBRatio = os.path.join(dirout, '15TmpPDBRatio.tsv') # 11473
+    f15nonTmpPDBRatio = os.path.join(dirout, '15nonTmpPDBRatio.tsv') # 47124
+
+    f15TmpPDBnotNul = os.path.join(dirout, '15TmpPDBnotNul.tsv')  # (1873, 2)
+    f15nonTmpPDBnotNul = os.path.join(dirout, '15nonTmpPDBnotNul.tsv')  # (6781, 2)
+
+    f15Tmp_nonTMP_hasPDB = os.path.join(dirout, '15Tmp_nonTMP_hasPDB.tsv')  # (14544, 4)
+    f15TmpPDB_nontmpPDB = os.path.join(dirout, '15TmpPDB_nontmpPDB.tsv')  # (6781, 2)
+    f15TmpPDB_nontmpPDB_count = os.path.join(dirout, '15TmpPDB_nontmpPDB_count.tsv')  # (6781, 2)
+    f15TmpPDB_nontmpPDB_ratio = os.path.join(dirout, '15TmpPDB_nontmpPDB_ratio.tsv')  # (6781, 2)
+
+    dirout = os.path.join(dirout,'result_pdb_pair')
+    check_path(dirout)
+
+    fpdbpair_with_predict = os.path.join(dirout, 'pdbpair_with_predict.tsv')  # (6781, 2)
+    fpdbpair_with_predict_sorted = os.path.join(dirout, 'pdbpair_with_predict_sorted.tsv')  # (6781, 2)
+
+
+
+    # proteinPfam(f1tmp, f15TmpPDB, tophit=False, item='PDB')
+    # proteinPfam(f1nontmp, f15nonTmpPDB, tophit=False, item='PDB')
+    #
+    # subcelluCount(f15TmpPDB, f15TmpPDBCount,1) # 11473
+    # subcelluCount(f15nonTmpPDB, f15nonTmpPDBCount,1) # 47124
+    #
+    # calculateRatio(f15TmpPDBCount,f15TmpPDBRatio)
+    # calculateRatio(f15nonTmpPDBCount,f15nonTmpPDBRatio)
+    #
+    # dropNul(f15TmpPDB, f15TmpPDBnotNul)     # (1873, 2)
+    # dropNul(f15nonTmpPDB, f15nonTmpPDBnotNul) # (6781, 2)
+
+
+    # mergeThree(fposi, f15TmpPDBnotNul, f15nonTmpPDBnotNul, f15Tmp_nonTMP_hasPDB,saveColumn=[0,1,4]) # (14544, 4)
+
+    # getPDBPair(f15Tmp_nonTMP_hasPDB, f15TmpPDB_nontmpPDB)
+    # mergeTwo(f15TmpPDB_nontmpPDB,fposi,fpdbpair_with_predict,left=[0,1,2,3],right=[0,1,2,3,4],keepleft=[0,1,2,3],keepright=[0,1,4])
+
+    df = pd.read_table(fpdbpair_with_predict, header=None)
+    df = df.sort_values(by=4,ascending=False)
+    df.to_csv(fpdbpair_with_predict_sorted,header=None,index=None,sep='\t')
+    # ##################### pdb on test human end ###########
     # df = pd.read_table(f15Tmp_nonTMP_hasPDB, header=None)
     # df1.to_csv(fout,header=None,index=None,sep='\t')
     print('stop', time.strftime('%Y-%m-%d %H:%M:%S', time.localtime()))
