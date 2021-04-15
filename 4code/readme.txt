@@ -16,7 +16,7 @@ pip install -r requirements_gpu.txt
 
 content tree
 
-E:.
+root
 │  readme.txt
 │
 ├─1images
