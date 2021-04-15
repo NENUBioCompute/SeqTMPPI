@@ -1,0 +1,4 @@
+test dataset file/4train/group/1/test.txt
+Loss:0.477931,ACC:0.788217
+evaluate result:[0.4779309928417206, 0.7882171869277954, 0.8278988003730774, 0.7207173705101013, 0.7688820958137512, 0.5783499479293823]
+manual result:[acc,metric_precision, metric_recall, metric_F1score, matthews_correlation]

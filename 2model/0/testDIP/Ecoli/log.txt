@@ -1,0 +1,4 @@
+test dataset file/8DIPPredict/predict/Ecoli/0/all.txt
+Loss:1.372038,ACC:0.500000
+evaluate result:[1.37203848361969, 0.5, 0.0, 0.0, 0.0, 0.0]
+manual result:[acc,metric_precision, metric_recall, metric_F1score, matthews_correlation]

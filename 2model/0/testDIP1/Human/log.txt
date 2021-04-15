@@ -1,0 +1,4 @@
+test dataset file/8DIPPredict/data/Human/2pair.tsv
+Loss:0.311482,ACC:0.903194
+evaluate result:[0.31148234009742737, 0.9031935930252075, 1.0, 0.9353333115577698, 0.9660183787345886, 0.0]
+manual result:[acc,metric_precision, metric_recall, metric_F1score, matthews_correlation]

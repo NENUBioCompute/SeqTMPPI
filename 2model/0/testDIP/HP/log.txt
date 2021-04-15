@@ -1,0 +1,4 @@
+test dataset file/8DIPPredict/predict/HP/0/all.txt
+Loss:0.881281,ACC:0.500000
+evaluate result:[0.881280779838562, 0.5, 0.5, 0.26923078298568726, 0.34999996423721313, 0.0]
+manual result:[acc,metric_precision, metric_recall, metric_F1score, matthews_correlation]
