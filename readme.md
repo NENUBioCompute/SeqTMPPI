@@ -1,10 +1,10 @@
-## A predictor for TMP-nonTMP interaction
+# A predictor for TMP-nonTMP interaction
 
 
-
-
+[click here to use this tool](https://github.com/NENUBioCompute/SeqTMPPI/tree/main/4code)
 # content tree
 
+~~~
 root
 │  readme.txt
 │
@@ -251,5 +251,5 @@ root
     │  └─
     └─
 
-
+~~~
 
