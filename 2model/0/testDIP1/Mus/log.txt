@@ -1,4 +1,0 @@
-test dataset file/8DIPPredict/data/Mus/2pair.tsv
-Loss:0.276708,ACC:0.917031
-evaluate result:[0.27670803666114807, 0.9170305728912354, 1.0, 0.9170305728912354, 0.9567197561264038, 0.0]
-manual result:[acc,metric_precision, metric_recall, metric_F1score, matthews_correlation]

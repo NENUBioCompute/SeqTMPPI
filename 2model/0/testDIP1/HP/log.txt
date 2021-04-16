@@ -1,4 +1,0 @@
-test dataset file/8DIPPredict/data/HP/2pair.tsv
-Loss:1.335619,ACC:0.269231
-evaluate result:[1.3356187343597412, 0.26923078298568726, 1.0, 0.26923078298568726, 0.42424240708351135, 0.0]
-manual result:[acc,metric_precision, metric_recall, metric_F1score, matthews_correlation]

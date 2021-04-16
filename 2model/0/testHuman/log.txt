@@ -1,4 +1,0 @@
-test dataset file/8humanPredict/3batchData/3batchData
-Loss:0.374078,ACC:0.870700
-evaluate result:[0.37407785654067993, 0.8707000017166138, 1.0, 0.8707000613212585, 0.9307976961135864, 0.0]
-manual result:[acc,metric_precision, metric_recall, metric_F1score, matthews_correlation]

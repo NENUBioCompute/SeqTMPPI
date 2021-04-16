@@ -1,4 +1,0 @@
-test dataset file/8DIPPredict/predict/Mus/0/all.txt
-Loss:1.049782,ACC:0.475983
-evaluate result:[1.049782395362854, 0.47598254680633545, 0.48704391717910767, 0.9179573059082031, 0.6363888382911682, -0.10025806725025177]
-manual result:[acc,metric_precision, metric_recall, metric_F1score, matthews_correlation]

@@ -4,37 +4,62 @@
 
 Sequence-Based Protein Interaction Recognition Between Transmembrane and non-Transmembrane Protein
 
-<p align="center"><img width="100%" src="1images/12Structure of the architecture.png" /></p>
+<p align="center"><img width="100%" src="https://github.com/NENUBioCompute/SeqTMPPI/blob/main/1images/Structure_of_the_architecture.png" /></p>
 
 ## Download data
 
-We provide the test dataset used in this study,  you can download test.fasta to evaluate our method.
+We provide the test dataset used in this study,  you can download test.tsv, test.fasta to evaluate our method.
 
 ## Quick Start
 
 ### Requirements
 - Python ≥ 3.6
 - Tensorflow and Keras
-- Psi-Blast for generating PSSM files
 
 ### Testing & Evaluation in Command Line
 We provide run.py that is able to run pre-trained models. Run it with:
-```
-python run.py -f sample/sample.fasta -p sample/pssm/ -o results/
-```
 
+~~~
+cmd = python run.py --model ../2model/0/_my_model.h5 --fasta sample/pair.fasta --pair sample/pair.tsv --output_path result/
+
+~~~
+
+
+* To set the path of model file, use `--model` or `-m`.
 * To set the path of fasta file, use `--fasta` or `-f`.
-* To set the path of generated PSSM files, use `--pssm_path` or `-p`.
-* To save outputs to a directory, use `--output` or `-o`.
+* To set the path of pair file, use `--pair` or `-p`.
+* To save outputs to a directory, use `--output_path` or `-o`.
 
+# Performance of the 5 models
+|Subset|Acc|Precision|Recall|F1score|MCC|
+|:----|:----|:----|:----|:----|:----|
+|0|0.790|0.770|0.813|0.789|0.581|
+|1|0.788|0.828|0.721|0.769|0.578|
+|2|0.758|0.705|0.894|0.786|0.537|
+|3|0.752|0.733|0.781|0.755|0.503|
+|4|0.750|0.729|0.811|0.766|0.503|
+|mean|0.768|0.753|0.804|0.773|0.541|
 
 
 # content tree
 
 ~~~
 root
-│  readme.txt
-│
+│  readme.md
+│  tree.txt
+│  
+├─.idea
+│  │  deployment.xml
+│  │  misc.xml
+│  │  modules.xml
+│  │  remote-mappings.xml
+│  │  SeqTMPPI20201226.iml
+│  │  vcs.xml
+│  │  workspace.xml
+│  │  
+│  └─inspectionProfiles
+│          profiles_settings.xml
+│          
 ├─1images
 │      10Top 10 important proteins by cytohubba..png
 │      11Top 7 most significant protein modules.png
@@ -48,10 +73,10 @@ root
 │      7KEGG pathway enrichment of TMPs.png
 │      8KEGG pathway enrichment of nonTMPs..png
 │      9Network Visualized on TMP-nonTMP interaction pairs.png
-│
+│      
 ├─2model
 │  │  result.csv
-│  │
+│  │  
 │  ├─0
 │  │  │  acc.png
 │  │  │  loss.png
@@ -63,63 +88,11 @@ root
 │  │  │  _history_dict.txt
 │  │  │  _my_model.h5
 │  │  │  _my_model.json
-│  │  │
-│  │  ├─test
-│  │  │      log.txt
-│  │  │      result.csv
-│  │  │
-│  │  ├─testDIP
-│  │  │  ├─Ecoli
-│  │  │  │      log.txt
-│  │  │  │      result.csv
-│  │  │  │
-│  │  │  ├─HP
-│  │  │  │      log.txt
-│  │  │  │      result.csv
-│  │  │  │
-│  │  │  ├─Human
-│  │  │  │      log.txt
-│  │  │  │      result.csv
-│  │  │  │
-│  │  │  ├─Mus
-│  │  │  │      log.txt
-│  │  │  │      result.csv
-│  │  │  │
-│  │  │  └─SC
-│  │  │          log.txt
-│  │  │          result.csv
-│  │  │
-│  │  ├─testDIP1
-│  │  │  │  result.csv
-│  │  │  │
-│  │  │  ├─Ecoli
-│  │  │  │      log.txt
-│  │  │  │      result.csv
-│  │  │  │
-│  │  │  ├─HP
-│  │  │  │      log.txt
-│  │  │  │      result.csv
-│  │  │  │
-│  │  │  ├─Human
-│  │  │  │      log.txt
-│  │  │  │      result.csv
-│  │  │  │
-│  │  │  ├─Mus
-│  │  │  │      log.txt
-│  │  │  │      result.csv
-│  │  │  │
-│  │  │  └─SC
-│  │  │          log.txt
-│  │  │          result.csv
-│  │  │
-│  │  ├─testHuman
-│  │  │      log.txt
-│  │  │      result.csv
-│  │  │
-│  │  └─testHuman01
+│  │  │  
+│  │  └─test
 │  │          log.txt
 │  │          result.csv
-│  │
+│  │          
 │  ├─1
 │  │  │  acc.png
 │  │  │  loss.png
@@ -131,11 +104,11 @@ root
 │  │  │  _history_dict.txt
 │  │  │  _my_model.h5
 │  │  │  _my_model.json
-│  │  │
+│  │  │  
 │  │  └─test
 │  │          log.txt
 │  │          result.csv
-│  │
+│  │          
 │  ├─2
 │  │  │  acc.png
 │  │  │  loss.png
@@ -147,11 +120,11 @@ root
 │  │  │  _history_dict.txt
 │  │  │  _my_model.h5
 │  │  │  _my_model.json
-│  │  │
+│  │  │  
 │  │  └─test
 │  │          log.txt
 │  │          result.csv
-│  │
+│  │          
 │  ├─3
 │  │  │  acc.png
 │  │  │  loss.png
@@ -163,11 +136,11 @@ root
 │  │  │  _history_dict.txt
 │  │  │  _my_model.h5
 │  │  │  _my_model.json
-│  │  │
+│  │  │  
 │  │  └─test
 │  │          log.txt
 │  │          result.csv
-│  │
+│  │          
 │  └─4
 │      │  acc.png
 │      │  loss.png
@@ -179,104 +152,73 @@ root
 │      │  _history_dict.txt
 │      │  _my_model.h5
 │      │  _my_model.json
-│      │
+│      │  
 │      └─test
 │              log.txt
 │              result.csv
-│
+│              
 ├─3dataset
 │  ├─DIP_homo
 │  │  │  2pair.fasta
-│  │  │
+│  │  │  
 │  │  └─0
 │  │          all.txt
-│  │
+│  │          
 │  ├─DIP_mus
 │  │  │  2pair.fasta
-│  │  │
+│  │  │  
 │  │  └─0
 │  │          all.txt
-│  │
+│  │          
 │  └─TMPPI_bench
 │      │  1all.fasta
-│      │
+│      │  
 │      ├─0
 │      │      all.txt
 │      │      test.txt
 │      │      train.txt
 │      │      validate.txt
-│      │
+│      │      
 │      ├─1
 │      │      all.txt
 │      │      test.txt
 │      │      train.txt
 │      │      validate.txt
-│      │
+│      │      
 │      ├─2
 │      │      all.txt
 │      │      test.txt
 │      │      train.txt
 │      │      validate.txt
-│      │
+│      │      
 │      ├─3
 │      │      all.txt
 │      │      test.txt
 │      │      train.txt
 │      │      validate.txt
-│      │
+│      │      
 │      └─4
 │              all.txt
 │              test.txt
 │              train.txt
 │              validate.txt
-│
+│              
 └─4code
     │  .gitignore
-    │  readme.txt
+    │  readme.md
     │  requirements_cpu.txt
     │  requirements_gpu.txt
-    │  _1positiveSample.py
-    │  _2negativeSample.py
-    │  _3handleCluster.py
-    │  _4train.py
-    │  _5DIPPredict.py
-    │  _6predict.py
-    │
-    ├─Rscript
-    │      gene_enrichment.R
-    │
-    ├─tool
-    │  │  calculate_performance.py
-    │  │  common.py
-    │  │  dao.py
-    │  │  DatabaseOperation2.py
-    │  │  dataset.py
-    │  │  entry.py
-    │  │  FastaDealear.py
-    │  │  FeatureDealer.py
-    │  │  handleCluster.py
-    │  │  myData.py
-    │  │  myEvaluate.py
-    │  │  myModel.py
-    │  │  mySupport.py
-    │  │  negativeData.py
-    │  │  PairDealer.py
-    │  │  ProteinDealer.py
-    │  │  queryPfam.py
-    │  │  README.md
-    │  │  README.txt
-    │  │  scatter.py
-    │  │  stepdeal20201226.py
-    │  │  targetDao.py
-    │  │  venn.py
-    │  │  VennPlot.py
-    │  │  _10humanTrain_support.py
-    │  │  _5statistic.py
-    │  │  _7imgPlotBar.py
-    │  │  _7imgPlotVenn.py
-    │  │  _8DIPPredict_support.py
-    │  └─
+    │  run.py
+    │  support.py
+    │  
+    ├─sample
+    │      pair.fasta
+    │      pair.tsv
+    │      
     └─
+       
+            
+
 
 ~~~
 
