@@ -20,8 +20,7 @@ We provide the test dataset used in this study,  you can download test.tsv, test
 We provide run.py that is able to run pre-trained models. Run it with:
 
 ~~~
-cmd = python run.py --model ../2model/0/_my_model.h5 --fasta sample/pair.fasta --pair sample/pair.tsv --output_path result/
-
+python run.py --model ../2model/0/_my_model.h5 --fasta sample/pair.fasta --pair sample/pair.tsv --output_path result/
 ~~~
 
 
