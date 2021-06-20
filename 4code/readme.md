@@ -16,4 +16,8 @@ the model was trained on gpu
 # requirement
 pip install -r requirements_gpu.txt
 
+python 3.8.3
+Keras==2.4.3
+tensorflow==2.4.0
+
 
