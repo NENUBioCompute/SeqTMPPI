@@ -14,10 +14,12 @@ python run.py --model ../2model/0/_my_model.h5 --fasta sample/pair.fasta --pair 
 the model was trained on gpu
 
 # requirement
+- python 3.8.3 
+- Keras==2.4.3
+- tensorflow==2.4.0
+
 pip install -r requirements_gpu.txt
 
-python 3.8.3
-Keras==2.4.3
-tensorflow==2.4.0
+
 
 
