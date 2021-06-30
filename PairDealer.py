@@ -125,7 +125,7 @@ class PairDealer:
         self.title = title
         self.sep = sep
     def part(self,fin,ratios,fouts):
-        # calcu_ratio(ratios)
+        ratios = calcu_ratio(ratios)
         data = pd.read_table(fin, header=None)
         data = data.sample(frac=1)
         _num = data.shape[0]

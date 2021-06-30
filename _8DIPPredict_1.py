@@ -7,7 +7,7 @@ import time
 from PairDealer import ComposeData, PairDealer
 from FastaDealear import FastaDealer
 from FeatureDealer import BaseFeature, Feature_type
-from common import check_path
+from common import check_path, concatFile
 from entry import entry
 from myModel import Param
 
@@ -204,13 +204,76 @@ if __name__ == '__main__':
     #     check_path(dirout_result)
     #     savepredict(fin_pair, dir_in, fin_model, dirout_result,batch_size=500,posi=True)
 
-    dirout = '/home/19jjhnenu/Data/SeqTMPPI2W/result/group/0/testDIP1/'
-    calculateResults(dirout, dirout, filename='log.txt', row=2, resultfilename='result.csv')
+    # dirout = '/home/19jjhnenu/Data/SeqTMPPI2W/result/group/0/testDIP1/'
+    # calculateResults(dirout, dirout, filename='log.txt', row=2, resultfilename='result.csv')
     pass
+
+    print('testing the model')
+    # for eachdir in ['Ecoli', 'Mus', 'Human', 'SC', 'HP']:
+    #
+    #     fin_pair = 'file/8DIPPredict/data_all/%s/dirRelated/2pair.tsv'%eachdir
+    #     dir_in = '/home/19jjhnenu/Data/SeqTMPPI2W/feature/%s/' % eachdir
+    #     fin_model = '/home/19jjhnenu/Data/SeqTMPPI2W/result/5CV_1/2/4/_my_model.h5'
+    #     dirout_result = '/home/19jjhnenu/Data/SeqTMPPI2W/result/5CV_1/2/4/testDIP_all/%s'%eachdir
+    #     check_path(dirout_result)
+    #
+    #     fin_fasta = 'file/8DIPPredict/data_all/%s/dirRelated/2pair.fasta' % eachdir
+    #
+    #     dir_feature_db = '/home/19jjhnenu/Data/SeqTMPPI2W/featuredb/%s/' % eachdir
+    #     dirout_feature = dir_in
+    #     _4getFeature(fin_pair, fin_fasta, dir_feature_db, dirout_feature)
+    #     savepredict(fin_pair, dir_in, fin_model, dirout_result,batch_size=500,posi=True)
+    #
+    # dirout = '/home/19jjhnenu/Data/SeqTMPPI2W/result/5CV_1/2/4/testDIP_all/'
+    # calculateResults(dirout, dirout, filename='log.txt', row=2, resultfilename='result.csv')
+
+
+
+
+
+
     # fin = 'file/8DIPPredict/data/Ecoli/2pair.tsv'
     # countline(fin)
     # df = pd.read_table(f4caseStudyPair_onlyOnePDB,header=None)
     # df1.to_csv(fout,header=None,index=None,sep='\t')
+
+    '''
+    concat all kinds of species 正负样本 1：1
+    HP 数据太少，只有26个正样本，抛弃
+    '''
+    # print('concat all kinds of species 正负样本 1：1')
+    # dirin = 'file/8DIPPredict/predict'
+    # fileList = [os.path.join(dirin,eachfile,'0/all.txt') for eachfile in ['Ecoli', 'Mus', 'Human', 'SC']]
+    # fout = os.path.join(dirin,'all.txt')
+    # concatFile(fileList, fout)
+
+    '''concat fasta'''
+    # print('concat all kinds of species  fasta')
+    # dirin = 'file/8DIPPredict/data_all'
+    # fileList = [os.path.join(dirin,eachfile,'dirRelated/2pair.fasta') for eachfile in ['Ecoli', 'Mus', 'Human', 'SC','HP']]
+    # fout = os.path.join(dirin,'all.fasta')
+    # concatFile(fileList, fout)
+
+    '''
+    feature 
+    '''
+    # fin_pair = 'file/8DIPPredict/predict/all.txt'
+    # fin_fasta= 'file/8DIPPredict/data_all/all.fasta'
+    # dir_feature_db = '/home/19jjhnenu/Data/SeqTMPPI2W/featuredb/%s/' % 'DIP'
+    # dirout_feature = '/home/19jjhnenu/Data/SeqTMPPI2W/feature/%s/' % 'DIP'
+    # _4getFeature(fin_pair, fin_fasta, dir_feature_db, dirout_feature)
+
+    '''
+    concat DIP posi exclude HP
+    '''
+    # dirin = 'file/8DIPPredict/data'
+    # fileList = [os.path.join(dirin,eachfile,'2pair.tsv') for eachfile in ['Ecoli', 'Mus', 'Human', 'SC']]
+    # fout = os.path.join(dirin,'all.txt')
+    # concatFile(fileList, fout)
+
+    # dir_data = 'file/8DIPPredict/predict'
+    # _7dividedTrainAndTest(dir_data)
+
     print('stop', time.strftime('%Y-%m-%d %H:%M:%S', time.localtime()))
     print('time', time.time() - start)
 

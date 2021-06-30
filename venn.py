@@ -280,7 +280,7 @@ def venn5(labels, names=['A', 'B', 'C', 'D', 'E'], **options):
     """
     colors = options.get('colors', [default_colors[i] for i in range(5)])
     figsize = options.get('figsize', (13, 13))
-    dpi = options.get('dpi', 96)
+    dpi = options.get('dpi', 300)
     fontsize = options.get('fontsize', 14)
 
     fig = plt.figure(0, figsize=figsize, dpi=dpi)
@@ -333,7 +333,7 @@ def venn5(labels, names=['A', 'B', 'C', 'D', 'E'], **options):
     draw_text(fig, ax, 0.97, 0.74, names[2], colors[2], fontsize=fontsize, ha="left")
     draw_text(fig, ax, 0.88, 0.05, names[3], colors[3], fontsize=fontsize, ha="left")
     draw_text(fig, ax, 0.12, 0.05, names[4], colors[4], fontsize=fontsize, ha="right")
-    leg = ax.legend(names, loc='center left', bbox_to_anchor=(1.0, 0.5), fancybox=True)
+    leg = ax.legend(names, loc='center left', bbox_to_anchor=(1.0, 0.5), fancybox=True,prop = {'size':fontsize})
     leg.get_frame().set_alpha(0.5)
 
     return fig, ax

@@ -71,6 +71,7 @@ def entry(dirout,fin_pair,dir_in,model_type = Param.CNN1D,limit=0,onehot=False,k
                     epochs = epochs,)
     mm.process(dirout,x_train, y_train, x_test, y_test,fin_model=fin_model)
     print('save result to %s'%dirout)
+    del x_test,x_train,y_test,y_train,mm
 def main(limit=5):
 # if __name__ == '__main__':
 #     limit = 0

@@ -30,17 +30,17 @@ def topNContain(f1posiInfo,fin_tmp_subcell,dirout,num,col,labelCol=0):
         if isinstance(subcellu_name,tuple):subcellu_name = subcellu_name[1]
         print(subcellu_name,len(proteinlist))
         saveList(proteinlist,os.path.join(dirout, '%s.list'%subcellu_name.replace(' ', '_')))
-def plotVenn(fins,names,fout):
+def plotVenn(fins,names,fout,**options):
     dfs = []
     for x in fins:
         dfs.append(list(pd.read_table(x,header=None)[0].values))
     labels = venn.get_labels(dfs, fill=['number'])
     num = len(fins)
-    if num == 2: fig, ax = venn.venn2(labels, names=names)
-    elif num == 3: fig, ax = venn.venn3(labels, names=names)
-    elif num == 4: fig, ax = venn.venn4(labels, names=names)
-    elif num == 5: fig, ax = venn.venn5(labels, names=names)
-    elif num == 6: fig, ax = venn.venn6(labels, names=names)
+    if num == 2: fig, ax = venn.venn2(labels, names=names,**options)
+    elif num == 3: fig, ax = venn.venn3(labels, names=names,**options)
+    elif num == 4: fig, ax = venn.venn4(labels, names=names,**options)
+    elif num == 5: fig, ax = venn.venn5(labels, names=names,**options)
+    elif num == 6: fig, ax = venn.venn6(labels, names=names,**options)
     else:print('only support 2~6 set')
     fig.savefig(fout, bbox_inches='tight')
     plt.close()
@@ -209,6 +209,19 @@ if __name__ == '__main__':
     # f7proteinType = os.path.join(foutdir, '7proteinType_drug_venn.png')
     # plotVenn(fins, names, f7proteinType)
 
+    '''
+    tmp nontmp drug target 2
+    '''
+    # fout = 'file/otherfile/2drugtarget.list'
+    # fins = ['file/5statistic/positive/1tmp.list',
+    # 'file/5statistic/positive/2gpcr.list',
+    # 'file/5statistic/positive/10allGprotein.tsv',
+    # 'file/5statistic/positive/1nontmp.list',
+    #         'file/otherfile/2drugtarget.list']
+    # names = ['Transmembrane Protein','GPCR Protein','G protein','non-Transmembrane Protein','Drug Target']
+    #
+    # f7proteinType = os.path.join(foutdir, '7proteinType_drug_venn_2.png')
+    # plotVenn(fins, names, f7proteinType,fontsize=20,dpi=300)
 
     pass
     # df = pd.read_table(f3tmpPfams,header=None)

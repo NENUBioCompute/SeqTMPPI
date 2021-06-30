@@ -54,34 +54,37 @@ def _2negaPair(dirDIP,fpositive,outdir):
     # outdir = 'file/8DIPPredict/data_nega/'
     for eachdir in os.listdir(dirDIP):
         currentdir = os.path.join(dirDIP, eachdir)
-
-        ftmp = os.path.join(currentdir, '2tmp.list')
-        fnontmp = os.path.join(currentdir, '2nontmp.list')
-        fposi = os.path.join(currentdir, '2pair.tsv')
-
         foutdir = os.path.join(outdir, eachdir)
+        composeNegaPair(currentdir,fpositive,foutdir)
 
-        f1pair = os.path.join(foutdir, '1pair.tsv')
-        f2pair = os.path.join(foutdir, '2pair.tsv')
-        f2pairInfo = os.path.join(foutdir, '2pairInfo.tsv')
-        f3pairInfo = os.path.join(foutdir, '3pairInfo.tsv')
-        f4pairInfo_subcell = os.path.join(foutdir, '4pairInfo_subcell.tsv')
-        f4pairInfo_subcell_differ = os.path.join(foutdir, '4pairInfo_subcell_differ.tsv')
-        dirout_related = os.path.join(foutdir, '4pairInfo_subcell_differ_related')
-        check_path(dirout_related)
-
-        df = pd.read_table(fposi, header=None)
-        composeTMP_nonTMP(ftmp, fnontmp, f1pair, int(df.shape[0] * 1.5))
-
-        dropPositiveAndRepeate(f1pair, fpositive, f2pair)
-        dropPositiveAndRepeate(f1pair, fposi, f2pair)
-        getPairInfo_TMP_nonTMP(f2pair, f2pairInfo, sep='\t', checkTMP=False, keepOne=True)
-        saveQualified(f2pairInfo, f3pairInfo)
-        handleRow(f3pairInfo, f4pairInfo_subcell, calcuSubcell)
-        saveDifferSubcell(f4pairInfo_subcell, f4pairInfo_subcell_differ)
-        saveRelated(f4pairInfo_subcell_differ, dirout_related)
 def _3combine_posi_nega(eachdir):
     fposiInfo = 'file/8DIPPredict/data/%s/2tmp_nontmp_info_qualified.tsv' % eachdir
     fnegaInfo = 'file/8DIPPredict/data_nega/%s/4pairInfo_subcell_differ.tsv' % eachdir
     dirout = 'file/8DIPPredict/data_all/%s/' % eachdir
     _2_1combineFasta(fposiInfo, fnegaInfo, dirout)
+
+def composeNegaPair(currentdir,fpositive,foutdir):
+    ftmp = os.path.join(currentdir, '2tmp.list')
+    fnontmp = os.path.join(currentdir, '2nontmp.list')
+    fposi = os.path.join(currentdir, '2pair.tsv')
+
+
+    f1pair = os.path.join(foutdir, '1pair.tsv')
+    f2pair = os.path.join(foutdir, '2pair.tsv')
+    f2pairInfo = os.path.join(foutdir, '2pairInfo.tsv')
+    f3pairInfo = os.path.join(foutdir, '3pairInfo.tsv')
+    f4pairInfo_subcell = os.path.join(foutdir, '4pairInfo_subcell.tsv')
+    f4pairInfo_subcell_differ = os.path.join(foutdir, '4pairInfo_subcell_differ.tsv')
+    dirout_related = os.path.join(foutdir, '4pairInfo_subcell_differ_related')
+    check_path(dirout_related)
+
+    df = pd.read_table(fposi, header=None)
+    composeTMP_nonTMP(ftmp, fnontmp, f1pair, int(df.shape[0] * 1.5))
+
+    dropPositiveAndRepeate(f1pair, fpositive, f2pair)
+    dropPositiveAndRepeate(f1pair, fposi, f2pair)
+    getPairInfo_TMP_nonTMP(f2pair, f2pairInfo, sep='\t', checkTMP=False, keepOne=True)
+    saveQualified(f2pairInfo, f3pairInfo)
+    handleRow(f3pairInfo, f4pairInfo_subcell, calcuSubcell)
+    saveDifferSubcell(f4pairInfo_subcell, f4pairInfo_subcell_differ)
+    saveRelated(f4pairInfo_subcell_differ, dirout_related)

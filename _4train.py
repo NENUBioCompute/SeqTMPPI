@@ -39,8 +39,8 @@ def train():
     ratios_tvt = [0.8, 0.1, 0.1]
     f3outs = [train, validate, test]
 
-    dir_feature_db = '/home/19jjhnenu/Data/SeqTMPPI2W/featuredb/129878/'
-    dirout_feature = '/home/19jjhnenu/Data/SeqTMPPI2W/feature/129878/'
+    dir_feature_db = '/root/19jjhnenu/Data/SeqTMPPI2W/featuredb/129878/'
+    dirout_feature = '/root/19jjhnenu/Data/SeqTMPPI2W/feature/129878/'
 
     '''
     1. ComposeData 64939 * 2
@@ -58,14 +58,16 @@ def train():
     '''
     generate feature db
     '''
-    # print('generate feature db')
+    print('generate feature db')
     # fd = FastaDealer()
     # fd.getNpy(fin_fasta, dir_feature_db)
     '''
     generate feature
     '''
-    # print('generate feature')
+    print('generate feature')
     # BaseFeature().base_compose(dirout_feature, fin_pair, dir_feature_db, feature_type=Feature_type.SEQ_1D)
+    # BaseFeature().base_compose(dirout_feature, fin_p, dir_feature_db, feature_type=Feature_type.SEQ_1D)
+    # BaseFeature().base_compose(dirout_feature, fin_n, dir_feature_db, feature_type=Feature_type.SEQ_1D)
 
     '''
     training the model
@@ -73,7 +75,7 @@ def train():
     print('training on the model')
 
     dir_in = dirout_feature
-    dirout = '/home/19jjhnenu/Data/SeqTMPPI2W/result/129878'
+    dirout = '/root/19jjhnenu/Data/SeqTMPPI2W/result/129878'
     check_path(dirout)
     validate = {}
     validate['fin_pair'] = 'file/4train/0/validate.txt'
@@ -89,8 +91,8 @@ def train():
     print('testing the model')
     # fin_pair = 'file/4train/0/test.txt'
     # dir_in = dirout_feature
-    # fin_model = '/home/19jjhnenu/Data/SeqTMPPI2W/result/129878/_my_model.h5'
-    # dirout_result = '/home/19jjhnenu/Data/SeqTMPPI2W/result/129878/test'
+    # fin_model = '/root/19jjhnenu/Data/SeqTMPPI2W/result/129878/_my_model.h5'
+    # dirout_result = '/root/19jjhnenu/Data/SeqTMPPI2W/result/129878/test'
     # check_path(dirout_result)
     # savepredict(fin_pair, dir_in, fin_model, dirout_result,batch_size=500)
 
@@ -110,10 +112,10 @@ def groupTrain():
     limit = 64939*2/5
 
     f1out = 'file/4train/group'
-    f2resultOut = '/home/19jjhnenu/Data/SeqTMPPI2W/result/group'
+    f2resultOut = '/root/19jjhnenu/Data/SeqTMPPI2W/result/group'
 
-    dir_feature_db = '/home/19jjhnenu/Data/SeqTMPPI2W/featuredb/129878/'
-    dirout_feature = '/home/19jjhnenu/Data/SeqTMPPI2W/feature/129878/'
+    dir_feature_db = '/root/19jjhnenu/Data/SeqTMPPI2W/featuredb/129878/'
+    dirout_feature = '/root/19jjhnenu/Data/SeqTMPPI2W/feature/129878/'
 
 
 
@@ -236,10 +238,10 @@ if __name__ == '__main__':
 
 
 
-    # train()
+    train()
 
-    # fin = '/home/19jjhnenu/Data/SeqTMPPI2W/result/129878/_history_dict.txt'
-    # outdir = '/home/19jjhnenu/Data/SeqTMPPI2W/result/129878/'
+    # fin = '/root/19jjhnenu/Data/SeqTMPPI2W/result/129878/_history_dict.txt'
+    # outdir = '/root/19jjhnenu/Data/SeqTMPPI2W/result/129878/'
     # with open(fin) as fi:
     #     line = fi.readline()
     #     mydict = eval(line)

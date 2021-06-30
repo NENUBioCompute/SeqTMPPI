@@ -16,7 +16,9 @@ from keras.layers import Dense, GlobalAveragePooling1D, Conv2D, Conv1D, Embeddin
 
 from myEvaluate import MyEvaluate
 from mySupport import plot_result
-
+import tensorflow as tf
+from tensorflow import keras
+from keras import layers
 
 class Param:
     metrics=MyEvaluate.metric
@@ -28,6 +30,8 @@ class Param:
     DNN = 'DNN'
     CNN_LSTM = 'CNN_LSTM'
     CNN1D_MAX_OH = 'CNN1D_MAX_OH'
+    CNN1D_6DIM = 'CNN1D_6DIM'
+    TRANSFORMER = 'TRANSFORMER'
 
 class MyModel(object):
     def __init__(self,
@@ -82,11 +86,13 @@ class MyModel(object):
         model =None
         if self.model_type==Param.CNN1D:model =self.CNN1D()
         elif self.model_type==Param.CNN1D_OH:model =self.CNN1D_OH()
+        elif self.model_type==Param.CNN1D_6DIM:model =self.CNN1D_OH()
         elif self.model_type == Param.CNN1D_MAX_OH:model = self.CNN1D_MAX_OH()
         elif self.model_type==Param.CNN2D:model =self.CNN2D()
         elif self.model_type==Param.LSTM:model =self.LSTM()
         elif self.model_type==Param.DNN:model =self.DNN()
         elif self.model_type == Param.CNN_LSTM:model = self.CNN_LSTM()
+        elif self.model_type == Param.TRANSFORMER:model = self.TRANSFORMER()
         else:assert 'no such model'
         self.model = model
 
@@ -226,7 +232,28 @@ class MyModel(object):
         model = Model(inputs=[input_a,input_b],outputs=predictions)
         model.evaluate()
         return model
+    def TRANSFORMER(self):
+        model = Sequential()
+        model.add(
+            Conv1D(filters=self.filters, kernel_size=self.kernel_size, activation='relu', input_shape=self.input_shape))
 
+        # embed_dim = 32  # Embedding size for each token
+        num_heads = 2  # Number of attention heads
+        # ff_dim = 32  # Hidden layer size in feed forward network inside transformer
+
+        inputs = layers.Input(shape=self.input_shape)
+        # embedding_layer = TokenAndPositionEmbedding(maxlen, vocab_size, embed_dim)
+        # x = embedding_layer(inputs)
+        transformer_block = TransformerBlock(self.input_shape[-1], num_heads, self.input_shape[-1])
+        x = transformer_block(inputs)
+        x = layers.GlobalAveragePooling1D()(x)
+        x = layers.Dropout(0.1)(x)
+        x = layers.Dense(20, activation="relu")(x)
+        x = layers.Dropout(0.1)(x)
+        outputs = layers.Dense(2, activation="softmax")(x)
+
+        model = keras.Model(inputs=inputs, outputs=outputs)
+        return model
     # support process_re_emerge
     def loadExistModel(self,fin_model):
         self.model = models.load_model(
@@ -236,6 +263,26 @@ class MyModel(object):
     # support save_result
     def evaluate(self,x_test,y_test):
         return self.model.evaluate(x_test, y_test, verbose=False,batch_size=self.batch_size)
+
+class TransformerBlock(layers.Layer):
+    def __init__(self, embed_dim, num_heads, ff_dim, rate=0.1):
+        super(TransformerBlock, self).__init__()
+        self.att = layers.MultiHeadAttention(num_heads=num_heads, key_dim=embed_dim)
+        self.ffn = keras.Sequential(
+            [layers.Dense(ff_dim, activation="relu"), layers.Dense(embed_dim),]
+        )
+        self.layernorm1 = layers.LayerNormalization(epsilon=1e-6)
+        self.layernorm2 = layers.LayerNormalization(epsilon=1e-6)
+        self.dropout1 = layers.Dropout(rate)
+        self.dropout2 = layers.Dropout(rate)
+
+    def call(self, inputs, training):
+        attn_output = self.att(inputs, inputs)
+        attn_output = self.dropout1(attn_output, training=training)
+        out1 = self.layernorm1(inputs + attn_output)
+        ffn_output = self.ffn(out1)
+        ffn_output = self.dropout2(ffn_output, training=training)
+        return self.layernorm2(out1 + ffn_output)
 
 # class testModel():
     # fin_pair = '/home/jjhnenu/data/PPI/release/pairdata/group/p_fp_1_1/0/all.txt'

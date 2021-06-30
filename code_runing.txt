@@ -1,0 +1,69 @@
+
+
+##################### 报错 ########################
+下载阿里云上面计算的pssm数据
+GPU /home/19jjhnenu/Data/Phsi_PSSM
+CPU /root/19jjhnenu/Data/Phsi_PSSM
+nohup wget ftp://39.97.240.2:22/home/jjhnenu/data/SeqTM2W/PSSM --ftp-user=jjhnenu --ftp-password=@jjh_nenu
+nohup wget -c -r -np -k -L -p ftp://39.97.240.2:22/home/jjhnenu/data/SeqTM2W/PSSM --ftp-user=jjhnenu --ftp-password=’@jjh_nenu‘
+
+
+
+################### 运行中  ###########################
+
+0620 15:47
+nohup python v2_train.py >0620_v2train
+
+
+
+
+
+
+
+############### 完成 #########################################
+
+_15crossvalidate.py CPU     需要去实验室把数据拷贝出来
+基于DIP all species exclude HP, +   数据集 在cpu上测试5CV_1中训练的模型
+nohup python3 _15crossvalidate.py >0616_testmodel_DIP_posi1
+结果在这里面  /root/19jjhnenu/Data/SeqTMPPI2W/result/5CV_1_DIP_posi/
+全部测完花费的时间：time 1340.1706538200378_15crossvalidate.py CPU     需要去实验室把数据拷贝出来
+基于DIP all species exclude HP, +   数据集 在cpu上测试5CV_1中训练的模型
+nohup python3 _15crossvalidate.py >0616_testmodel_DIP_posi1
+结果在这里面  /root/19jjhnenu/Data/SeqTMPPI2W/result/5CV_1_DIP_posi/
+全部测完花费的时间：time 1340.1706538200378
+
+_15crossvalidate.py
+time 824.6968328952789  测试一个模型花费的时间
+基于test 数据集 在cpu上测试5CV_1中训练的模型
+nohup python3 _15crossvalidate.py >0611_testmodel
+结果在这里面  /root/19jjhnenu/Data/SeqTMPPI2W/result/5CV_1_test/
+
+_15crossvalidate.py CPU
+基于DIP all species exclude HP, + -  数据集 在cpu上测试5CV_1中训练的模型
+nohup python3 _15crossvalidate.py >0611_testmodel_DIP
+结果在这里面  /root/19jjhnenu/Data/SeqTMPPI2W/result/5CV_1_DIP/
+全部测完花费的时间：time 1340.1706538200378
+
+_15crossvalidate.py GPU
+time 824.6968328952789  测试一个模型花费的时间
+基于test 数据集 在cpu上测试5CV_1中训练的模型
+nohup python _15crossvalidate.py >0617_IMEx
+结果在这里面  /home/19jjhnenu/Data/SeqTMPPI2W/result/5CV_1_IMEx_posi/
+
+测试IMEx带正负集合的
+################## 行不通  ##############################
+
+
+v2_train GPU  0 1 2 3 GPU出问题，运行失败-- 原因是数据量太大，用的是cnn2d模型
+基于file/train/0/tain.txt 的数据训练模型
+nohup /usr/bin/python v2_train.py >0617_v2train
+结果在 /home/19jjhnenu/Data/Phsi_Blos/result/benchmark
+
+
+
+
+
+
+
+
+

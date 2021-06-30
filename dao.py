@@ -234,10 +234,23 @@ def getFasta(fin_all_protein,fout):
     do = DataOperation('uniprot', 'uniprot_sprot')
     projection = {'sequence.#text':True}
     with open(fout, 'w') as fo:
+        from Bio import SeqIO
+        from Bio.Seq import Seq
+        from Bio.SeqRecord import SeqRecord
+        records = []
+
+
         for AC in proteins:
             pro = queryProtein(AC,do,projection=projection)
-            fo.write('>%s\n%s\n'%(AC,pro['sequence.#text']))
-            fo.flush()
+            if not pro:continue
+            record = SeqRecord(Seq(pro['sequence']['#text']), id=AC, description='')
+            records.append(record)
+
+            #fo.write('>%s\n%s\n'%(AC,pro['sequence']['#text']))
+            #fo.flush()
+
+        SeqIO.write(records, fout, 'fasta')
+
 def getPairInfo_TMP_nonTMP(fin,fout,sep='\t',checkTMP=True,keepOne=False):
     '''
 

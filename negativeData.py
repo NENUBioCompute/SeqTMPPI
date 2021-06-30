@@ -61,8 +61,8 @@ import pandas as pd
 #                 fo.write('%s%s%s\n'%(g[0],sep,g[1]))
 #                 fo.flush()
 def dropPositiveAndRepeate(fin,fbase,fout):
-    df = pd.read_csv(fin, sep='\t', header=None)
-    df_base = pd.read_csv(fbase, sep='\t', header=None).drop_duplicates()
+    df = pd.read_csv(fin, sep='\t', header=None)[[0,1]]
+    df_base = pd.read_csv(fbase, sep='\t', header=None)[[0,1]].drop_duplicates()
     df_all = pd.concat([df_base,df]).drop_duplicates()
     df_all.iloc[df_base.shape[0]:,:].to_csv(fout,header=None,index=None,sep='\t')
     return df_all

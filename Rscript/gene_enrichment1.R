@@ -3,150 +3,7 @@
 # Created on:  2021/3/22 19:48
 # des : https://blog.csdn.net/weixin_43569478/article/details/83744384
 # 图中灰色的点代表基因，黄色的点代表富集到的pathways, 默认画top5富集到的pathwayss, pathways节点的大小对应富集到的基因个数。
-# rm(list=ls())
-# library(DOSE)
 
-## "file/6bioAnalysis/KEGGenrich/img/14TmpGeneIDCount_enrich.png"
-## 'file/6bioAnalysis/KEGGenrich/14TmpGeneIDCount_enrich.tsv'
-
-# fin = 'file/5statistic/positive/14TmpGeneIDCount.tsv'
-# fout = 'file/6bioAnalysis/KEGGenrich/14TmpGeneIDCount_enrich.tsv'
-# de = read.csv(fin,sep='\t',header = F)[,1]
-#
-# library(clusterProfiler)
-# kk <- enrichKEGG(de, organism="hsa", pvalueCutoff=0.05, pAdjustMethod="BH",
-#                  qvalueCutoff=0.1)
-# head(summary(kk))
-# write.csv(kk,file=fout)
-#
-# dirout = 'file/6bioAnalysis/KEGGenrich/img/14TmpGeneIDCount_enrich.png'
-#
-# png(file = dirout, bg = "transparent")
-# barplot(kk, showCategory = 10)
-# dev.off()
-
-## "file/6bioAnalysis/KEGGenrich/img/14nonTmpGeneIDCount_enrich.png"
-## 'file/6bioAnalysis/KEGGenrich/14nonTmpGeneIDCount_enrich.tsv'
-
-# fin = 'file/5statistic/positive/14nonTmpGeneIDCount.tsv'
-# fout = 'file/6bioAnalysis/KEGGenrich/14nonTmpGeneIDCount_enrich.tsv'
-# de = read.csv(fin,sep='\t',header = F)[,1]
-#
-# library(clusterProfiler)
-# kk <- enrichKEGG(de, organism="hsa", pvalueCutoff=0.05, pAdjustMethod="BH",
-#                  qvalueCutoff=0.1)
-# head(summary(kk))
-# write.csv(kk,file=fout)
-#
-# dirout = 'file/6bioAnalysis/KEGGenrich/img/14nonTmpGeneIDCount_enrich.png'
-#
-# png(file = dirout, bg = "transparent")
-# barplot(kk, showCategory = 10)
-# dev.off()
-
-## "file/6bioAnalysis/KEGGenrich/img/14nonTmpGeneIDCount_enrich_dot.png"
-
-# fin = 'file/5statistic/positive/14TmpGeneIDCount.tsv'
-# de = read.csv(fin,sep='\t',header = F)[,1]
-#
-# library(clusterProfiler)
-# kk <- enrichKEGG(de, organism="hsa", pvalueCutoff=0.05, pAdjustMethod="BH",
-#                  qvalueCutoff=0.1)
-#
-# dirout = 'file/6bioAnalysis/KEGGenrich/img/14TmpGeneIDCount_enrich_dot.png'
-#
-# png(file = dirout, bg = "transparent")
-# dotplot(kk, showCategory = 10,orderBy = "x")
-# dev.off()
-
-
-## "file/6bioAnalysis/KEGGenrich/img/14nonTmpGeneIDCount_enrich_dot.png"
-
-# fin = 'file/5statistic/positive/14nonTmpGeneIDCount.tsv'
-# de = read.csv(fin,sep='\t',header = F)[,1]
-#
-# library(clusterProfiler)
-# kk <- enrichKEGG(de, organism="hsa", pvalueCutoff=0.05, pAdjustMethod="BH",
-#                  qvalueCutoff=0.1)
-# dirout = 'file/6bioAnalysis/KEGGenrich/img/14nonTmpGeneIDCount_enrich_dot.png'
-#
-# png(file = dirout, bg = "transparent")
-# dotplot(kk, showCategory = 10,orderBy = "x")
-# dev.off()
-
-
-## "file/6bioAnalysis/KEGGenrich/img/14TmpGeneIDCount_enrich_cne.png"
-
-
-# fin = 'file/5statistic/positive/14TmpGeneIDCount.tsv'
-# de = read.csv(fin,sep='\t',header = F)[,1]
-#
-# library(clusterProfiler)
-# kk <- enrichKEGG(de, organism="hsa", pvalueCutoff=0.05, pAdjustMethod="BH",
-#                  qvalueCutoff=0.1)
-#
-# dirout = 'file/6bioAnalysis/KEGGenrich/img/14TmpGeneIDCount_enrich_cne.png'
-#
-# png(file = dirout, bg = "white")
-# cnetplot(kk, showCategory = 5)
-# dev.off()
-
-
-
-## "file/6bioAnalysis/KEGGenrich/img/14nonTmpGeneIDCount_enrich_cne.png"
-
-# fin = 'file/5statistic/positive/14nonTmpGeneIDCount.tsv'
-# fout = 'file/6bioAnalysis/KEGGenrich/14nonTmpGeneIDCount_enrich.tsv'
-# de = read.csv(fin,sep='\t',header = F)[,1]
-#
-# library(clusterProfiler)
-# kk <- enrichKEGG(de, organism="hsa", pvalueCutoff=0.05, pAdjustMethod="BH",
-#                  qvalueCutoff=0.1)
-#
-# dirout = 'file/6bioAnalysis/KEGGenrich/img/14nonTmpGeneIDCount_enrich_cne.png'
-#
-# png(file = dirout, bg = "white")
-# cnetplot(kk, showCategory = 5)
-# dev.off()
-
-
-## "file/6bioAnalysis/KEGGenrich/img/14TmpGeneIDCount_enrich_ema.png"
-
-
-# fin = 'file/5statistic/positive/14TmpGeneIDCount.tsv'
-# de = read.csv(fin,sep='\t',header = F)[,1]
-#
-# library(clusterProfiler)
-# library(enrichplot)
-# library(GOSemSim)
-# kk <- enrichKEGG(de, organism="hsa", pvalueCutoff=0.05, pAdjustMethod="BH",
-#                  qvalueCutoff=0.1)
-# ekk = pairwise_termsim(kk)
-# dirout = 'file/6bioAnalysis/KEGGenrich/img/14TmpGeneIDCount_enrich_ema.png'
-#
-# png(file = dirout, bg = "white",res = 300)
-# emapplot_cluster(ekk, showCategory = 30)
-# dev.off()
-
-## "file/6bioAnalysis/KEGGenrich/img/14nonTmpGeneIDCount_enrich_ema.png"
-
-# fin = 'file/5statistic/positive/14nonTmpGeneIDCount.tsv'
-# de = read.csv(fin,sep='\t',header = F)[,1]
-#
-# library(clusterProfiler)
-# kk <- enrichKEGG(de, organism="hsa", pvalueCutoff=0.05, pAdjustMethod="BH",
-#                  qvalueCutoff=0.1)
-#
-# dirout = 'file/6bioAnalysis/KEGGenrich/img/14nonTmpGeneIDCount_enrich_ema.png'
-# ekk = pairwise_termsim(kk)
-# png(file = dirout, bg = "white")
-# emapplot_cluster(ekk, showCategory = 30)
-# dev.off()
-
-
-
-## "file/6bioAnalysis/KEGGenrich/img/14TmpGeneIDCount_enrich.png"
-## 'file/6bioAnalysis/KEGGenrich/14TmpGeneIDCount_enrich.tsv'
 
 rm(list=ls())
 library(clusterProfiler)
@@ -240,24 +97,6 @@ myfunc.enrich = function (fin,foutdir,col,content = list('KEGG','GO','GO_all'),t
   }
 }
 
-
-# fin = 'file/5statistic/positive/14TmpGeneIDCount.tsv'
-# foutdir = 'file/6bioAnalysis/1enrich/goall/TMP'
-
-# fin = 'file/5statistic/positive/14nonTmpGeneIDCount.tsv'
-# foutdir = 'file/6bioAnalysis/1enrich/nonTMP'
-
-
-# fin = 'file/5statistic/positive/14TmpGeneIDCount.tsv'
-# foutdir = 'file/6bioAnalysis_20210409/1enrich/TMP'
-#
-# fin = 'file/5statistic/positive/14nonTmpGeneIDCount.tsv'
-# foutdir = 'file/6bioAnalysis_20210409/1enrich/nonTMP'
-#
-# col = 1
-# # myfunc.enrich(fin,foutdir,col,content = list('GO_all'),type=list('dot3'))
-# myfunc.enrich(fin,foutdir,col,content = list('KEGG','GO'),type=list('ema','cne','dot','bar'))
-
 myfunc.enrich_compare = function (fin1,fin2,foutdir,col,content = list('KEGG','GO','Pathway','GO_all'),type=list('dot2')){
 
   # fin = 'file/5statistic/positive/14TmpGeneIDCount.tsv'
@@ -299,14 +138,6 @@ myfunc.enrich_compare = function (fin1,fin2,foutdir,col,content = list('KEGG','G
   }
 }
 
-
-
-# fin_tmp = 'file/5statistic/positive/14TmpGeneIDCount.tsv'
-# fin_nontmp = 'file/5statistic/positive/14nonTmpGeneIDCount.tsv'
-# dirout = 'file/6bioAnalysis/1enrich/tmp_nontmp_concat'
-# col = 1
-# myfunc.enrich_compare(fin_tmp,fin_nontmp,dirout,col,content = list('GO_all'))
-#
 
 #################################################################################################
 #####                                                                                      ######

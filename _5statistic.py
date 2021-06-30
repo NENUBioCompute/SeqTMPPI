@@ -110,6 +110,19 @@ def mergeTwo(fleft,fright,fout,left=None,right=None,keepleft=None,keepright=None
     df3 = df1.merge(df2)
     df3.to_csv(fout,sep='\t',header=None,index=None)
     print('left,right,merge: ',df1.shape,df2.shape,df3.shape)
+
+def func(x):
+    '''
+    change ('PF00001', '7tm_1')	246 0.222
+    to 'PF00001', '7tm_1'	246 0.222
+    :param x:
+    :return:
+    '''
+    y = []
+    y.extend(eval(x[0]))
+    y.extend([x[1],x[2]])
+    return pd.Series(y)
+
 def findNotIn(f1tmp, f2gpcr, f3notGpcr):
     df1 = pd.read_csv(f1tmp,header=None)
     df2 = pd.read_csv(f2gpcr,header=None)
@@ -171,11 +184,23 @@ def calculateRatio(f11TmpSubcellularCount,f11TmpSubcellularRatio):
     total = df[1].sum()
     df[1].astype(float)
     df[2] = df[1].apply(lambda x:x/total)
+    df = df.sort_values(by=2,ascending=False)
     df.to_csv(f11TmpSubcellularRatio,header=None,index=None,sep='\t')
 
-    pass
-
-
+def mapClan(fin, ftable, fout):
+    # f5tmpPfamsRatio_plain = 'file/5statistic/positive/5tmpPfamsRatio_plain.tsv'
+    # f5tmpPfamsClan_count = 'file/5statistic/positive/5tmpPfamsClan_count.tsv'
+    # ftable = 'file/5statistic/support/Pfam-A.clans_34.0.tsv'
+    df1 = pd.read_table(ftable, header=None)
+    df2 = pd.read_table(fin, header=None)
+    df2.columns = [0, 7, 5, 6]
+    df3 = df2.merge(df1)
+    groups = df3.groupby(1)
+    df4 = pd.DataFrame()
+    for group_name, group_df in groups:
+        f_se = group_df[5].agg(['sum'])
+        df4 = df4.append(pd.Series([group_name, f_se['sum']], name='sum'))
+    df4.to_csv(fout, header=None, index=None, sep='\t')
 if __name__ == '__main__':
     print('start', time.strftime('%Y-%m-%d %H:%M:%S', time.localtime()))
     start = time.time()
@@ -214,8 +239,20 @@ if __name__ == '__main__':
     f5tmpPfamsCount = os.path.join(dirout, '5tmpPfamsCount.tsv') # 2081
     f5nontmpPfamsCount = os.path.join(dirout, '5nontmpPfamsCount.tsv') # 5643
 
+    f5tmpPfamsRatio_plain = 'file/5statistic/positive/5tmpPfamsRatio_plain.tsv'
+    f5nontmpPfamsRatio_plain = 'file/5statistic/positive/5nontmpPfamsRatio_plain.tsv'
+
     f5tmpPfamsRatio = os.path.join(dirout, '5tmpPfamsRatio.tsv') # 2081
     f5nontmpPfamsRatio = os.path.join(dirout, '5nontmpPfamsRatio.tsv') # 5643
+
+    f5tmpPfamsClan_count = os.path.join(dirout, '5tmpPfamsClan_count.tsv')  #
+    f5nontmpPfamsClan_count = os.path.join(dirout, '5nontmpPfamsClan_count.tsv')  #
+
+    f5tmpPfamsClanRatio = os.path.join(dirout, '5tmpPfamsClanRatio.tsv') #
+    f5nontmpPfamsClanRatio = os.path.join(dirout, '5nontmpClanPfamsRatio.tsv') #
+
+    f5tmpPfamsClanRatio_info = os.path.join(dirout, '5tmpPfamsClanRatio_info.tsv') #
+    f5nontmpPfamsClanRatio_info = os.path.join(dirout, '5nontmpClanPfamsRatio_info.tsv') #
 
     f6signal = os.path.join(dirout, '6signal.list')
     f6signal_contactor = os.path.join(dirout, '6signal_contactor.tsv')
@@ -358,6 +395,45 @@ if __name__ == '__main__':
     # calculateRatio(f5tmpPfamsCount,f5tmpPfamsRatio)
     # calculateRatio(f5nontmpPfamsCount,f5nontmpPfamsRatio)
 
+    # df = pd.read_table(f5tmpPfamsRatio,header=None)
+    # df1= df.apply(lambda x:func(x),axis=1)
+    # df1.to_csv(f5tmpPfamsRatio_plain,header=None,index=None,sep='\t')
+    #
+    # df = pd.read_table(f5nontmpPfamsRatio,header=None)
+    # df1= df.apply(lambda x:func(x),axis=1)
+    # df1.to_csv(f5nontmpPfamsRatio_plain,header=None,index=None,sep='\t')
+
+####################################### clan ##################################
+
+    # ftable = 'file/5statistic/support/Pfam-A.clans_34.0.tsv'
+    # mapClan(f5tmpPfamsRatio_plain,ftable,f5tmpPfamsClan_count)
+    #
+    # ftable = 'file/5statistic/support/Pfam-A.clans_34.0.tsv'
+    # mapClan(f5nontmpPfamsRatio_plain,ftable,f5nontmpPfamsClan_count)
+    #
+    # calculateRatio(f5tmpPfamsClan_count,f5tmpPfamsClanRatio)
+    # calculateRatio(f5nontmpPfamsClan_count,f5nontmpPfamsClanRatio)
+
+    # ftable = 'file/5statistic/support/Pfam-A.clans_34.0.tsv'
+    # df = pd.read_table(f5tmpPfamsClanRatio,header=None)
+    # dftable = pd.read_table(ftable,header=None)[[1,2]].drop_duplicates().dropna()
+    # dftable.columns=[3,0]
+    # df.columns =[3,1,2]
+    # df3 = df.merge(dftable)
+    # df3 = df3.reindex(columns=[0,1,2,3])
+    # df3.to_csv(f5tmpPfamsClanRatio_info, header=None, index=None, sep='\t')
+    #
+    # ftable = 'file/5statistic/support/Pfam-A.clans_34.0.tsv'
+    # df = pd.read_table(f5nontmpPfamsClanRatio,header=None)
+    # dftable = pd.read_table(ftable,header=None)[[1,2]].drop_duplicates().dropna()
+    # dftable.columns=[3,0]
+    # df.columns =[3,1,2]
+    # df3 = df.merge(dftable)
+    # df3 = df3.reindex(columns=[0,1,2,3])
+    # df3.to_csv(f5nontmpPfamsClanRatio_info, header=None, index=None, sep='\t')
+
+
+
 ####################################### signal ################################
     # '''
     # get gpcr list
@@ -386,9 +462,9 @@ if __name__ == '__main__':
     # proteinCount(f8nontmp_species,f2=f8nontmp_species_count)
     # proteinCount(f8species,f2=f8species_count)
     # calculateRatio(f8species_count,f8species_Ratio)
-
-    calculateRatio(f8tmp_species_count,f8tmp_species_Ratio)
-    calculateRatio(f8nontmp_species_count,f8nontmp_species_Ratio)
+    #
+    # calculateRatio(f8tmp_species_count,f8tmp_species_Ratio)
+    # calculateRatio(f8nontmp_species_count,f8nontmp_species_Ratio)
 
     # species_pair_count(f8posiSpecies, f8species_pair_count)
 

@@ -26,9 +26,9 @@ import time
 if __name__ == '__main__':
     print('start', time.strftime('%Y-%m-%d %H:%M:%S', time.localtime()))
     start = time.time()
-    # fout = 'file/otherfile/1drugtarget.list'
-    # check_path('file/otherfile/')
-    # getallProtein(fout)
+    fout = 'file/otherfile/1drugtarget.list'
+    check_path('file/otherfile/')
+    getallProtein(fout)
     pass
     print('stop', time.strftime('%Y-%m-%d %H:%M:%S', time.localtime()))
     print('time', time.time() - start)

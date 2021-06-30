@@ -134,7 +134,7 @@ def groupCalculate(dirin,filetype='all'):
         t.to_csv(os.path.join(dirout, 'result.csv'),index=True, header=True)
         print(dirout)
 
-def savepredict(fin_pair,dir_in,fin_model,dirout_result,batch_size=90,limit=0,posi=False):
+def savepredict(fin_pair,dir_in,fin_model,dirout_result,batch_size=90,limit=0,posi=False,onehot = True):
     # fin_pair = '/home/19jiangjh/data/PPI/release/pairdata/p_fw/1/0/test.txt'
     # dir_in = '/home/19jiangjh/data/PPI/release/feature/p_fp_fw_19471'
     # fin_model = '/home/19jiangjh/data/PPI/release/result_in_paper/alter_ratio/p_fw_train_validate/1/_my_model.h5'
@@ -145,10 +145,11 @@ def savepredict(fin_pair,dir_in,fin_model,dirout_result,batch_size=90,limit=0,po
     df = pd.read_table(fin_pair, header=None)
     if df.shape[1]!=3:
         df[2]=1 if posi else 0
-    onehot = True
+
     dataarray = BaseData().loadTest(fin_pair, dir_in,onehot=onehot,is_shuffle=False,limit=limit)
     x_test, y_test =dataarray
-    print('load model...')
+    print('load model...',fin_model)
+    # from tensorflow.keras.models import load_model
     # model = load_model(fin_model, custom_objects=MyEvaluate.metric_json)
     model = models.load_model(fin_model, custom_objects=MyEvaluate.metric_json)
 
@@ -158,7 +159,7 @@ def savepredict(fin_pair,dir_in,fin_model,dirout_result,batch_size=90,limit=0,po
     result = model.evaluate(x_test, y_test, verbose=1,batch_size=batch_size)
 
     result_predict = model.predict(x_test,batch_size=batch_size)
-    result_class = np.argmax(result_predict, axis=-1)
+    result_class = (result_predict > 0.5).astype("int32")
     result_predict = result_predict.reshape(-1)
 
     # result_class = model.predict_classes(x_test,batch_size=batch_size)

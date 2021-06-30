@@ -12,13 +12,15 @@ from common import check_path, handleBygroup, getPairs
 
 
 class Feature_type:
+    PHSI_BLOS = 'PHSI_BLOS'
+    PHSI_PSSM = 'PHSI_PSSM'
     V_PSSM='V_PSSM'
     H_PSSM='H_PSSM'
     SEQ_1D = 'SEQ_1D'
     SEQ_1D_OH = 'SEQ_1D_OH' # onehot
     SEQ_2D = 'SEQ_2D'
 class BaseFeature:
-    def base_compose(self,dirout_feature,fin_pair,dir_feature_db,feature_type='V_PSSM',fout_pair=''):
+    def base_compose(self,dirout_feature,fin_pair,dir_feature_db,feature_type='V_PSSM',fout_pair='',check_data=True):
         check_path(dirout_feature)
         fo  = open(fout_pair,'w') if fout_pair!='' else None
         row = 0
@@ -36,9 +38,10 @@ class BaseFeature:
                 continue
             pa = np.load(fa,allow_pickle=True)
             pb = np.load(fb,allow_pickle=True)
-            if (len(pa)<50 or len(pa)>2000 or max(pa)>20) or (len(pb)<50 or len(pb)>2000 or max(pb)>20):
-                print('wrong length or x')
-                continue
+            if check_data:
+                if (len(pa)<50 or len(pa)>2000 or max(pa)>20) or (len(pb)<50 or len(pb)>2000 or max(pb)>20):
+                    print('wrong length or x')
+                    continue
             if fo!=None:
                 fo.write('%s\t%s\n'%(a,b))
                 fo.flush()
@@ -48,6 +51,8 @@ class BaseFeature:
             elif feature_type == Feature_type.SEQ_1D:pc = self.padding_seq1D(pa,pb,vstack=False)
             # elif feature_type == Feature_type.SEQ_1D_OH:pc = self.padding_seq1D(pa,pb,vstack=False)
             elif feature_type == Feature_type.SEQ_2D:pc = self.padding_seq2D(pa,pb)
+            elif feature_type == Feature_type.PHSI_BLOS:pc = self.padding_PSSM(pa,pb,vstack=True,shape=(2000,25))
+            elif feature_type == Feature_type.PHSI_PSSM:pc = self.padding_PSSM(pa,pb,vstack=True,shape=(2000,25))
             else:
                 print('incoreect feature_type')
                 return
@@ -65,6 +70,7 @@ class BaseFeature:
         pb_pad_row = np.pad(pb_pad_col, ((0, shape[0] - pb.shape[0]), (0, 0)), 'constant')
         pc = np.vstack([pa_pad_row, pb_pad_row]) if vstack else np.hstack([pa_pad_row, pb_pad_row])
         return pc
+
     def padding_seq1D(self,pa,pb,vstack=True,shape=(2000,)):
         # data.shape = (4000,)
         # warring padding number not appear in origin data

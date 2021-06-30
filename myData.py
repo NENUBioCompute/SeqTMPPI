@@ -123,7 +123,7 @@ class BaseData:
             from keras.utils import to_categorical
             data = to_categorical(data)
         else:
-            if len(data.shape) > 2:  # for 2D
+            if len(data.shape) > 3:  # for 2D
                 data = np.reshape(data, data.shape + (1,))
         if test_size == 0:
             return data, label
@@ -179,23 +179,40 @@ class BaseData:
         count = 0
         for proteins in getPairs(fin_pair, title=False):
             count = count +1
-            eachfile = os.path.join(dir_in, '%s_%s.npy' % (proteins[0], proteins[1]))
-            # print(count,eachfile)
-            try:
-                # elem = np.load(os.path.join(dir_in, eachfile))
-                elem = np.load(eachfile)
-                x_test.append(elem)
-                # loading test dataset or positive dataset
-                if len(proteins) < 3 or proteins[2] == '1':
-                    y_test.append(1)
-                else:
-                    y_test.append(0)
-            except:
-                print('not find feature of this pair', str(proteins))
+            xelem,yelem = self.loadPpair(dir_in, proteins)
+            x_test.append(xelem)
+            y_test.append(yelem)
+            # eachfile = os.path.join(dir_in, '%s_%s.npy' % (proteins[0], proteins[1]))
+            # # print(count,eachfile)
+            # try:
+            #     # elem = np.load(os.path.join(dir_in, eachfile))
+            #     elem = np.load(eachfile)
+            #     x_test.append(elem)
+            #     # loading test dataset or positive dataset
+            #     if len(proteins) < 3 or proteins[2] == '1':
+            #         y_test.append(1)
+            #     else:
+            #         y_test.append(0)
+            # except:
+            #     print('not find feature of this pair', str(proteins))
             if count == limit:break
         data = np.array(x_test)
         label = np.array(y_test)
         return self.subprocess(data,label,test_size=0, random_state=123,onehot=onehot,is_shuffle=is_shuffle)
+    def loadPpair(self,dir_in,proteins):
+        eachfile = os.path.join(dir_in, '%s_%s.npy' % (proteins[0], proteins[1]))
+        # print(count,eachfile)
+        try:
+            # elem = np.load(os.path.join(dir_in, eachfile))
+            xelem = np.load(eachfile)
+            # loading test dataset or positive dataset
+            if len(proteins) < 3 or proteins[2] == '1':
+                yelem=1
+            else:
+                yelem=0
+            return xelem, yelem
+        except:
+            print('not find feature of this pair', str(proteins))
     # def loadDataWithLable(self,fin_pair,dir_in,onehot=False,is_shuffle=False):
     #     return self.subprocess(data,label,test_size=0, random_state=123,onehot=onehot,is_shuffle=is_shuffle)
     # def loadFeature(self, fin_pair,dir_in):
