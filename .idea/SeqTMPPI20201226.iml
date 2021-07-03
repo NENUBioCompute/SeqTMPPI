@@ -7,7 +7,7 @@
       <excludeFolder url="file://$MODULE_DIR$/tool/contact-kegg" />
       <excludeFolder url="file://$MODULE_DIR$/tool/coQ" />
     </content>
-    <orderEntry type="jdk" jdkName="seqtmp 3.8.3 (sftp://19jjhnenu@210.47.18.43:22/usr/bin/python)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Remote Python 3.6.9 (sftp://jjhnenu@39.97.240.2:22/usr/bin/python)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
   <component name="TestRunnerService">

@@ -6,7 +6,6 @@
 """
 import os
 
-import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from keras import models
@@ -19,6 +18,8 @@ from myEvaluate import MyEvaluate
 
 
 def plot_result(history_dict,outdir):
+    import matplotlib.pyplot as plt
+
     fig = plt.figure()
     for key in history_dict.keys():
         # print('%s,%s'%(key,str(history_dict[key][-1])))

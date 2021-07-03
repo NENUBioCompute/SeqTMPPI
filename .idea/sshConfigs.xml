@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SshConfigs">
+    <configs>
+      <sshConfig authType="PASSWORD" host="159.226.41.132" id="6207d078-8794-4c04-b6c6-42b9c1e0860c" port="10022" nameFormat="DESCRIPTIVE" username="tempjump" />
+    </configs>
+  </component>
+</project>

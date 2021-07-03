@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" autoUpload="Always" serverName="GPUSeqtmppi" remoteFilesAllowedToDisappearOnAutoupload="false">
+  <component name="PublishConfigData" autoUpload="Always" serverName="seqtmppi" remoteFilesAllowedToDisappearOnAutoupload="false">
     <serverData>
       <paths name="CPUSeqTMPPI">
         <serverdata>
@@ -72,6 +72,20 @@
           </mappings>
         </serverdata>
       </paths>
+      <paths name="jjhnenu@39.97.240.2:22">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/tmp/pycharm_project_796" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="jjhnenu@39.97.240.2:22 (1)">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/tmp/pycharm_project_796" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
       <paths name="psydrugkb">
         <serverdata>
           <mappings>
@@ -90,6 +104,13 @@
         <serverdata>
           <mappings>
             <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="中科大跳板">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/" local="$PROJECT_DIR$" web="/" />
           </mappings>
         </serverdata>
       </paths>

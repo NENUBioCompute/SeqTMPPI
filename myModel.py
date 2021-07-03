@@ -15,7 +15,7 @@ from keras.layers import Dense, GlobalAveragePooling1D, Conv2D, Conv1D, Embeddin
 # from keras.utils import plot_model
 
 from myEvaluate import MyEvaluate
-from mySupport import plot_result
+# from mySupport import plot_result
 import tensorflow as tf
 from tensorflow import keras
 from keras import layers

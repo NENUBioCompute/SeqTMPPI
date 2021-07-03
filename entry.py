@@ -5,7 +5,6 @@
 @desc:
 """
 import os
-
 # from myData import TmpPSSMData
 # from myModel import MyModel, Param
 import time

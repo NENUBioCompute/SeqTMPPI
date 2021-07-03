@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="7667aa6a-296e-4ece-85d3-4402efbbad8c" name="中科大跳板">
+        <fileTransfer rootFolder="/home/tempjump/Code/SeqTMPPI20201226" accessType="SFTP" host="159.226.41.132" port="10022" sshConfigId="6207d078-8794-4c04-b6c6-42b9c1e0860c" sshConfig="tempjump@159.226.41.132:10022 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

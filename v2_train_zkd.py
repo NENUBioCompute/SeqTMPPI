@@ -65,8 +65,8 @@ def crossTrain(dirout_feature,f2resultOut,modelreuse=True):
     # PairDealer().part(train,ratios_tvt,f3outs)
     limit = 0
     # eachdir = 'benchmark'
-    # dirout_feature = '/home/19jjhnenu/Data/Phsi_Blos/feature/%s/' % eachdir
-    # f2resultOut = '/home/19jjhnenu/Data/SeqTMPPI2W/result/5CV_1'
+    # dirout_feature = '/mnt/data/sunshiwei/Phsi_Blos/feature/%s/' % eachdir
+    # f2resultOut = '/mnt/data/sunshiwei/SeqTMPPI2W/result/5CV_1'
     '''
     cross train
     '''
@@ -86,39 +86,38 @@ def crossTrain(dirout_feature,f2resultOut,modelreuse=True):
             validate['dir_in'] = dirout_feature
             onehot = False
 
-            # entry(f3dirout, train, dirout_feature, model_type=Param.CNN1D_OH, limit=0, onehot=onehot, kernel_size=90,
-            #       epochs=80,
-            #       # epochs=2,
-            #       filters=300, batch_size=500, validate=validate,
-            #       fin_model=fin_model)
-
-            entry(f3dirout, train, dirout_feature, model_type=Param.TRANSFORMER, limit=10, onehot=onehot, kernel_size=90,
-                  # epochs=80,
-                  epochs=2,
+            entry(f3dirout, train, dirout_feature, model_type=Param.CNN1D_OH, limit=0, onehot=onehot, kernel_size=90,
+                  epochs=80,
+                  # epochs=2,
                   filters=300, batch_size=500, validate=validate,
                   fin_model=fin_model)
+
+            # entry(f3dirout, train, dirout_feature, model_type=Param.TRANSFORMER, limit=10, onehot=onehot, kernel_size=90,
+            #       # epochs=80,
+            #       epochs=2,
+            #       filters=300, batch_size=500, validate=validate,
+            #       fin_model=fin_model)
         #
         #
             oldfile = str(elem)
         #     # print(f3dirout)
-        # calculateResults(f2dirout, f2dirout, resultfilename='result.csv')
+        calculateResults(f2dirout, f2dirout, resultfilename='result.csv')
 
         # eachdir = 'benchmark'
-        # eachdir = 'benchmark'
-        # dirout_feature = '/home/19jjhnenu/Data/Phsi_Blos/feature/%s/' % eachdir
+        # dirout_feature = '/mnt/data/sunshiwei/Phsi_Blos/feature/%s/' % eachdir
         # print('testing the model on test dataset')
         # fin_model = os.path.join(f2dirout, oldfile, '_my_model.h5')
         # fin_test = 'file/4train/5CV/data/test.txt'
-        # dirout_result_test = '/home/19jjhnenu/Data/Phsi_Blos/result/5CV_1_test/%d'%cv
+        # dirout_result_test = '/mnt/data/sunshiwei/Phsi_Blos/result/5CV_1_test/%d'%cv
         # check_path(dirout_result_test)
         # savepredict(fin_test, dirout_feature, fin_model, dirout_result_test,batch_size=500,limit=2000,onehot = onehot)
         '''
         testing on DIP all.txt in DIP/predict
         '''
         # fin_test = 'file/8DIPPredict/predict/all.txt'
-        # dirout_feature = '/home/19jjhnenu/Data/Phsi_Blos/feature/%s/' % 'DIP'
+        # dirout_feature = '/mnt/data/sunshiwei/Phsi_Blos/feature/%s/' % 'DIP'
         # fin_model = os.path.join(f2dirout, oldfile, '_my_model.h5')
-        # dirout_result_test = '/home/19jjhnenu/Data/Phsi_Blos/result/5CV_1_DIP/%d' % cv
+        # dirout_result_test = '/mnt/data/sunshiwei/Phsi_Blos/result/5CV_1_DIP/%d' % cv
         # check_path(dirout_result_test)
         # savepredict(fin_test, dirout_feature, fin_model, dirout_result_test, batch_size=500,onehot = onehot)
 
@@ -126,9 +125,9 @@ def crossTrain(dirout_feature,f2resultOut,modelreuse=True):
         testing on DIP all.txt in DIP/data
         '''
         # fin_test = 'file/8DIPPredict/data/all.txt'
-        # dirout_feature = '/home/19jjhnenu/Data/Phsi_Blos/feature/%s/' % 'DIP'
+        # dirout_feature = '/mnt/data/sunshiwei/Phsi_Blos/feature/%s/' % 'DIP'
         # fin_model = os.path.join(f2dirout, oldfile, '_my_model.h5')
-        # dirout_result_test = '/home/19jjhnenu/Data/Phsi_Blos/result/5CV_1_DIP_posi/%d' % cv
+        # dirout_result_test = '/mnt/data/sunshiwei/Phsi_Blos/result/5CV_1_DIP_posi/%d' % cv
         # check_path(dirout_result_test)
         # savepredict(fin_test, dirout_feature, fin_model, dirout_result_test, batch_size=500,onehot = onehot)
 
@@ -137,9 +136,9 @@ def crossTrain(dirout_feature,f2resultOut,modelreuse=True):
         testing on  all.txt in Imex
         '''
         # fin_test = 'file/8ImexPredict/4pair.tsv'
-        # dirout_feature = '/home/19jjhnenu/Data/Phsi_Blos/feature/%s/' % 'IMEx'
+        # dirout_feature = '/mnt/data/sunshiwei/Phsi_Blos/feature/%s/' % 'IMEx'
         # fin_model = os.path.join(f2dirout, oldfile, '_my_model.h5')
-        # dirout_result_test = '/home/19jjhnenu/Data/Phsi_Blos/result/5CV_1_IMEx_posi/%d' % cv
+        # dirout_result_test = '/mnt/data/sunshiwei/Phsi_Blos/result/5CV_1_IMEx_posi/%d' % cv
         # check_path(dirout_result_test)
         # savepredict(fin_test, dirout_feature, fin_model, dirout_result_test, batch_size=500,onehot = onehot)
 
@@ -147,9 +146,9 @@ def crossTrain(dirout_feature,f2resultOut,modelreuse=True):
         IMEx + - 
         '''
         # fin_test = 'file/8ImexPredict/predict/0/all.txt'
-        # dirout_feature = '/home/19jjhnenu/Data/Phsi_Blos/feature/%s/' % 'IMEx'
+        # dirout_feature = '/mnt/data/sunshiwei/Phsi_Blos/feature/%s/' % 'IMEx'
         # fin_model = os.path.join(f2dirout, oldfile, '_my_model.h5')
-        # dirout_result_test = '/home/19jjhnenu/Data/Phsi_Blos/result/5CV_1_IMEx/%d' % cv
+        # dirout_result_test = '/mnt/data/sunshiwei/Phsi_Blos/result/5CV_1_IMEx/%d' % cv
         # check_path(dirout_result_test)
         # savepredict(fin_test, dirout_feature, fin_model, dirout_result_test, batch_size=500,onehot = onehot)
         '''
@@ -157,9 +156,9 @@ def crossTrain(dirout_feature,f2resultOut,modelreuse=True):
         '''
         # for eachfile in ['Ecoli', 'Human', 'Mus', 'SC']:
         #     fin_test = 'file/8DIPPredict/data/%s/2pair.tsv'%eachfile
-        #     dirout_feature = '/home/19jjhnenu/Data/Phsi_Blos/feature/%s/' % 'DIP'
+        #     dirout_feature = '/mnt/data/sunshiwei/Phsi_Blos/feature/%s/' % 'DIP'
         #     fin_model = os.path.join(f2dirout, oldfile, '_my_model.h5')
-        #     dirout_result_test = '/home/19jjhnenu/Data/Phsi_Blos/result/5CV_1_DIP_%s/%d' % (eachfile,cv)
+        #     dirout_result_test = '/mnt/data/sunshiwei/Phsi_Blos/result/5CV_1_DIP_%s/%d' % (eachfile,cv)
         #     check_path(dirout_result_test)
         #     savepredict(fin_test, dirout_feature, fin_model, dirout_result_test, batch_size=500,onehot = onehot)
 
@@ -168,9 +167,9 @@ def crossTrain(dirout_feature,f2resultOut,modelreuse=True):
         '''
         # for eachfile in ['Ecoli', 'Human', 'Mus', 'SC']:
         #     fin_test = 'file/8DIPPredict/predict/%s/0/all.txt'%eachfile
-        #     dirout_feature = '/home/19jjhnenu/Data/Phsi_Blos/feature/%s/' % 'DIP'
+        #     dirout_feature = '/mnt/data/sunshiwei/Phsi_Blos/feature/%s/' % 'DIP'
         #     fin_model = os.path.join(f2dirout, oldfile, '_my_model.h5')
-        #     dirout_result_test = '/home/19jjhnenu/Data/Phsi_Blos/result/5CV_1_DIP_%s_+-/%d' % (eachfile,cv)
+        #     dirout_result_test = '/mnt/data/sunshiwei/Phsi_Blos/result/5CV_1_DIP_%s_+-/%d' % (eachfile,cv)
         #     check_path(dirout_result_test)
         #     savepredict(fin_test, dirout_feature, fin_model, dirout_result_test, batch_size=500,onehot = onehot)
 
@@ -187,60 +186,60 @@ if __name__ == '__main__':
     # fin_pair = 'file/4train/0/all.txt'
     # fin_fasta = 'file/3cluster/1all.fasta'
     # eachdir ='benchmark'
-    # dir_feature_db = '/home/19jjhnenu/Data/Phsi_Blos/featuredb/%s/' % eachdir
-    # dirout_feature = '/home/19jjhnenu/Data/Phsi_Blos/feature/%s/' % eachdir
+    # dir_feature_db = '/mnt/data/sunshiwei/Phsi_Blos/featuredb/%s/' % eachdir
+    # dirout_feature = '/mnt/data/sunshiwei/Phsi_Blos/feature/%s/' % eachdir
     # getFeature(fin_pair, fin_fasta, dir_feature_db, dirout_feature)
-
-    fin_pair = 'file/8DIPPredict/data/all.txt'
-    fin_fasta = 'file/8DIPPredict/data_all/all.fasta'
-    eachdir ='DIP'
-    dir_feature_db = '/home/19jjhnenu/Data/Phsi_Blos/featuredb/%s/' % eachdir
-    dirout_feature = '/home/19jjhnenu/Data/Phsi_Blos/feature/%s/' % eachdir
+    #
+    # fin_pair = 'file/8DIPPredict/data/all.txt'
+    # fin_fasta = 'file/8DIPPredict/data_all/all.fasta'
+    # eachdir ='DIP'
+    # dir_feature_db = '/mnt/data/sunshiwei/Phsi_Blos/featuredb/%s/' % eachdir
+    # dirout_feature = '/mnt/data/sunshiwei/Phsi_Blos/feature/%s/' % eachdir
     # getFeature(fin_pair, fin_fasta, dir_feature_db, dirout_feature)
-
-    fin_pair = 'file/8DIPPredict/predict/all.txt'
-    fin_fasta = 'file/8DIPPredict/data_all/all.fasta'
-    eachdir ='DIP'
-    dir_feature_db = '/home/19jjhnenu/Data/Phsi_Blos/featuredb/%s/' % eachdir
-    dirout_feature = '/home/19jjhnenu/Data/Phsi_Blos/feature/%s/' % eachdir
+    #
+    # fin_pair = 'file/8DIPPredict/predict/all.txt'
+    # fin_fasta = 'file/8DIPPredict/data_all/all.fasta'
+    # eachdir ='DIP'
+    # dir_feature_db = '/mnt/data/sunshiwei/Phsi_Blos/featuredb/%s/' % eachdir
+    # dirout_feature = '/mnt/data/sunshiwei/Phsi_Blos/feature/%s/' % eachdir
     # getFeature(fin_pair, fin_fasta, dir_feature_db, dirout_feature)
-
+    #
     # for ef in ['Ecoli', 'Human', 'Mus', 'SC']:
     #     fin_pair = 'file/8DIPPredict/data_nega/%s/4pairInfo_subcell_differ_related/2pair.tsv'%ef
     #     fin_fasta = 'file/8DIPPredict/data_all/all.fasta'
     #     eachdir ='DIP'
-    #     dir_feature_db = '/home/19jjhnenu/Data/Phsi_Blos/featuredb/%s/' % eachdir
-    #     dirout_feature = '/home/19jjhnenu/Data/Phsi_Blos/feature/%s/' % eachdir
+    #     dir_feature_db = '/mnt/data/sunshiwei/Phsi_Blos/featuredb/%s/' % eachdir
+    #     dirout_feature = '/mnt/data/sunshiwei/Phsi_Blos/feature/%s/' % eachdir
     #     getFeature(fin_pair, fin_fasta, dir_feature_db, dirout_feature)
     #
     # fin_pair = 'file/8ImexPredict/data_nega/2pair.tsv'
     # fin_fasta = 'file/8ImexPredict/data_nega/4pairInfo_subcell_differ_related/2pair.fasta'
     # eachdir = 'IMEx'
-    # dir_feature_db = '/home/19jjhnenu/Data/Phsi_Blos/featuredb/%s/' % eachdir
-    # dirout_feature = '/home/19jjhnenu/Data/Phsi_Blos/feature/%s/' % eachdir
-    # # getFeature(fin_pair, fin_fasta, dir_feature_db, dirout_feature)
+    # dir_feature_db = '/mnt/data/sunshiwei/Phsi_Blos/featuredb/%s/' % eachdir
+    # dirout_feature = '/mnt/data/sunshiwei/Phsi_Blos/feature/%s/' % eachdir
+    # getFeature(fin_pair, fin_fasta, dir_feature_db, dirout_feature)
     #
     # fin_pair = 'file/8ImexPredict/data/2pair.tsv'
     # fin_fasta = 'file/8ImexPredict/data/2pair.fasta'
     # eachdir = 'IMEx'
-    # dir_feature_db = '/home/19jjhnenu/Data/Phsi_Blos/featuredb/%s/' % eachdir
-    # dirout_feature = '/home/19jjhnenu/Data/Phsi_Blos/feature/%s/' % eachdir
-    # # getFeature(fin_pair, fin_fasta, dir_feature_db, dirout_feature)
+    # dir_feature_db = '/mnt/data/sunshiwei/Phsi_Blos/featuredb/%s/' % eachdir
+    # dirout_feature = '/mnt/data/sunshiwei/Phsi_Blos/feature/%s/' % eachdir
+    # getFeature(fin_pair, fin_fasta, dir_feature_db, dirout_feature)
 
     '''
     train
     '''
     eachdir ='benchmark'
-    dirout_feature = '/home/19jjhnenu/Data/Phsi_Blos/feature/%s/' % eachdir
+    dirout_feature = '/mnt/data/sunshiwei/Phsi_Blos/feature/%s/' % eachdir
     dir_in = dirout_feature
     eachdir = 'benchmark'
-    dirout = '/home/19jjhnenu/Data/Phsi_Blos/result/%s/' % eachdir
+    dirout = '/mnt/data/sunshiwei/Phsi_Blos/result/%s/' % eachdir
     check_path(dirout)
     validate = {}
     validate['fin_pair'] = 'file/4train/0/validate.txt'
     validate['dir_in'] = dir_in
     onehot = False
-
+    #
     import os
     import tensorflow as tf
 
@@ -255,10 +254,10 @@ if __name__ == '__main__':
     tf.compat.v1.Session(config=tf_config)
 
 
-    # fin_pair = 'file/4train/0/train.txt'
-    # # fin_pair = 'file/4train/0/test.txt'
-    # dirout = '/home/19jjhnenu/Data/Phsi_Blos/result/%s/' % 'testall'
-    # print('training model')
+    fin_pair = 'file/4train/0/train.txt'
+    # fin_pair = 'file/4train/0/test.txt'
+    dirout = '/mnt/data/sunshiwei/Phsi_Blos/result/%s/' % 'testall'
+    print('training model')
     # entry(dirout, fin_pair, dirout_feature, model_type=Param.CNN1D_OH, limit=0, onehot=onehot, kernel_size=3,
     #       epochs=80,
     #       # epochs=2,
@@ -273,35 +272,35 @@ if __name__ == '__main__':
     print('testing the model')
     # fin_pair = 'file/4train/0/test.txt'
     # dir_in = dirout_feature
-    # fin_model = '/home/19jjhnenu/Data/SeqTMPPI2W/result/129878/_my_model.h5'
-    # dirout_result = '/home/19jjhnenu/Data/SeqTMPPI2W/result/129878/test'
+    # fin_model = '/mnt/data/sunshiwei/SeqTMPPI2W/result/129878/_my_model.h5'
+    # dirout_result = '/mnt/data/sunshiwei/SeqTMPPI2W/result/129878/test'
     # check_path(dirout_result)
     # savepredict(fin_pair, dir_in, fin_model, dirout_result,batch_size=500)
 
-    # dirout = '/home/19jjhnenu/Data/Phsi_Blos/result/5CV_1_test'
-    # dirout = '/home/19jjhnenu/Data/Phsi_Blos/result/5CV_1_IMEx_posi'
-    # dirout = '/home/19jjhnenu/Data/Phsi_Blos/result/5CV_1_DIP_posi'
-    # dirout = '/home/19jjhnenu/Data/Phsi_Blos/result/5CV_1_DIP'
+    # dirout = '/mnt/data/sunshiwei/Phsi_Blos/result/5CV_1_test'
+    # dirout = '/mnt/data/sunshiwei/Phsi_Blos/result/5CV_1_IMEx_posi'
+    # dirout = '/mnt/data/sunshiwei/Phsi_Blos/result/5CV_1_DIP_posi'
+    # dirout = '/mnt/data/sunshiwei/Phsi_Blos/result/5CV_1_DIP'
 
     # dirA = ['5CV_1_test','5CV_1_IMEx_posi','5CV_1_DIP_posi']
     # dirB = ['5CV_1_DIP_%s'%x for x in ['Ecoli', 'Human', 'Mus', 'SC']]
     # dirA.extend(dirB)
     # for eachfile in dirA:
-    #     dirout = '/home/19jjhnenu/Data/Phsi_Blos/result/%s'%eachfile
+    #     dirout = '/mnt/data/sunshiwei/Phsi_Blos/result/%s'%eachfile
     #     calculateResults(dirout,dirout,filename='log.txt',row=2)
 
     # for eachfile in ['Ecoli', 'Human', 'Mus', 'SC']:
-    #     dirout = '/home/19jjhnenu/Data/Phsi_Blos/result/5CV_1_DIP_%s_+-/' % (eachfile)
+    #     dirout = '/mnt/data/sunshiwei/Phsi_Blos/result/5CV_1_DIP_%s_+-/' % (eachfile)
     #     calculateResults(dirout, dirout, filename='log.txt', row=2)
 
     #
     # eachfile = '5CV_1_IMEx'
-    # dirout = '/home/19jjhnenu/Data/Phsi_Blos/result/%s' % eachfile
+    # dirout = '/mnt/data/sunshiwei/Phsi_Blos/result/%s' % eachfile
     # calculateResults(dirout,dirout,filename='log.txt',row=2)
 
-    # data = np.load('/home/19jjhnenu/Data/Phsi_Blos/featuredb/benchmark/A0A0B4J1F4.npy')
-    # data = np.load('/home/19jjhnenu/Data/Phsi_Blos/feature/benchmark/Q9UYS2_P58552.npy')
-    # data = np.load('/home/19jjhnenu/Data/SeqTMPPI2W/feature/129878/Q9UYS2_P58552.npy')
+    # data = np.load('/mnt/data/sunshiwei/Phsi_Blos/featuredb/benchmark/A0A0B4J1F4.npy')
+    # data = np.load('/mnt/data/sunshiwei/Phsi_Blos/feature/benchmark/Q9UYS2_P58552.npy')
+    # data = np.load('/mnt/data/sunshiwei/SeqTMPPI2W/feature/129878/Q9UYS2_P58552.npy')
 
     pass
     print('stop', time.strftime('%Y-%m-%d %H:%M:%S', time.localtime()))

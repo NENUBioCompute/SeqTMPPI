@@ -210,7 +210,8 @@ if __name__ == '__main__':
     # P34709	P34691	1
     # Q61824	Q60631	1
 
-    dirout = 'file/5statistic/positive'
+    # dirout = 'file/5statistic/positive'
+    dirout = 'file/5statistic/negative'
     f1tmp = os.path.join(dirout,'1tmp.list')
     f1nontmp = os.path.join(dirout,'1nontmp.list')
     f1all = os.path.join(dirout,'1all.list')
@@ -465,7 +466,7 @@ if __name__ == '__main__':
     #
     # calculateRatio(f8tmp_species_count,f8tmp_species_Ratio)
     # calculateRatio(f8nontmp_species_count,f8nontmp_species_Ratio)
-
+    #
     # species_pair_count(f8posiSpecies, f8species_pair_count)
 
 
@@ -585,12 +586,13 @@ if __name__ == '__main__':
     dirout = 'file/5statistic/negative'
     check_path(dirout)
     f1negaInfo = os.path.join(dirout, '1negaInfo.tsv')
+    df = pd.read_table(f1negaInfo,header=None)
 
-    # f8tmp_species = os.path.join(dirout, '8tmp_species.tsv')
-    # f8nontmp_species = os.path.join(dirout, '8nontmp_species.tsv')
-    # f8species = os.path.join(dirout, '8species.tsv')
-    # f8sameSpecies = os.path.join(dirout, '8sameSpecies.tsv')
-    # f8posiSpecies = os.path.join(dirout, '8posiSpecies.tsv')
+    f8tmp_species = os.path.join(dirout, '8tmp_species.tsv')
+    f8nontmp_species = os.path.join(dirout, '8nontmp_species.tsv')
+    f8species = os.path.join(dirout, '8species.tsv')
+    f8sameSpecies = os.path.join(dirout, '8sameSpecies.tsv')
+    f8posiSpecies = os.path.join(dirout, '8negaSpecies.tsv')
     f8tmp_species_count = os.path.join(dirout, '8tmp_species_count.tsv')
     f8nontmp_species_count = os.path.join(dirout, '8nontmp_species_count.tsv')
     f8species_count = os.path.join(dirout, '8species_count.tsv')
@@ -598,6 +600,18 @@ if __name__ == '__main__':
 
     f9human_related = os.path.join(dirout, '9human_related.tsv')
     f9human_human = os.path.join(dirout, '9human_human.tsv') # 155
+
+
+    # findSpecies(f1negaInfo,f8species, f8tmp_species, f8nontmp_species, f8sameSpecies,f8posiSpecies)
+    # proteinCount(f8tmp_species,f2=f8tmp_species_count)
+    # proteinCount(f8nontmp_species,f2=f8nontmp_species_count)
+    # proteinCount(f8species,f2=f8species_count)
+    # calculateRatio(f8species_count,f8species_Ratio)
+    #
+    # calculateRatio(f8tmp_species_count,f8tmp_species_Ratio)
+    # calculateRatio(f8nontmp_species_count,f8nontmp_species_Ratio)
+    #
+    # species_pair_count(f8posiSpecies, f8species_pair_count)
 
     '''
     get negative info 
@@ -656,7 +670,7 @@ if __name__ == '__main__':
 
 
 
-    # df = pd.read_table(f4caseStudyPair_onlyOnePDB,header=None)
+    df = pd.read_table(f1negaInfo,header=None)
     # df1.to_csv(fout,header=None,index=None,sep='\t')
 
     print('stop', time.strftime('%Y-%m-%d %H:%M:%S', time.localtime()))

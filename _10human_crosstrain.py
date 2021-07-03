@@ -118,15 +118,15 @@ import time
 if __name__ == '__main__':
     print('start', time.strftime('%Y-%m-%d %H:%M:%S', time.localtime()))
     start = time.time()
-    # import os
-    # import tensorflow as tf
-    # gpu_id = '1,2,3,4,5,6,7'
-    # os.environ['CUDA_VISIBLE_DEVICES'] = str(gpu_id)
-    # os.system('echo $CUDA_VISIBLE_DEVICES')
-    #
-    # tf_config = tf.compat.v1.ConfigProto()
-    # tf_config.gpu_options.allow_growth = True
-    # tf.compat.v1.Session(config=tf_config)
+    import os
+    import tensorflow as tf
+    gpu_id = '1,2,3,4,5,6,7'
+    os.environ['CUDA_VISIBLE_DEVICES'] = str(gpu_id)
+    os.system('echo $CUDA_VISIBLE_DEVICES')
+
+    tf_config = tf.compat.v1.ConfigProto()
+    tf_config.gpu_options.allow_growth = True
+    tf.compat.v1.Session(config=tf_config)
 
     crosshumanTrain(modelreuse=True)
 
