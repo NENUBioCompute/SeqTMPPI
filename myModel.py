@@ -6,11 +6,11 @@
 """
 import os
 from functools import wraps
-from keras import models, Input, Model, callbacks
-from keras.callbacks import EarlyStopping
+from tensorflow.keras import models, Input, Model, callbacks
+from tensorflow.keras.callbacks import EarlyStopping
 
-from keras.models import Sequential
-from keras.layers import Dense, GlobalAveragePooling1D, Conv2D, Conv1D, Embedding, GlobalAveragePooling2D, Flatten, \
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense, GlobalAveragePooling1D, Conv2D, Conv1D, Embedding, GlobalAveragePooling2D, Flatten, \
     Dropout, Activation, MaxPooling2D, MaxPooling1D, LSTM, concatenate, Concatenate, GlobalMaxPooling1D
 # from keras.utils import plot_model
 
@@ -18,7 +18,8 @@ from myEvaluate import MyEvaluate
 # from mySupport import plot_result
 import tensorflow as tf
 from tensorflow import keras
-from keras import layers
+from tensorflow.keras import layers
+
 
 class Param:
     metrics=MyEvaluate.metric
@@ -67,7 +68,7 @@ class MyModel(object):
             fixlen = int(self.input_shape[0]/2)
             x_train = [x_train[:,:fixlen],x_train[:,fixlen:]]
             x_test = [x_test[:,:fixlen],x_test[:,fixlen:]]
-        print('x_train.shape,x_test.shape',x_train[0].shape,x_test[0].shape)
+        print('x_train.shape,x_test.shape',x_train.shape,x_test.shape)
         if fin_model:self.loadExistModel(fin_model)
         else:self.loadModel()
         self.complie()
@@ -250,7 +251,7 @@ class MyModel(object):
         x = layers.Dropout(0.1)(x)
         x = layers.Dense(20, activation="relu")(x)
         x = layers.Dropout(0.1)(x)
-        outputs = layers.Dense(2, activation="softmax")(x)
+        outputs = layers.Dense(1, activation="sigmoid")(x)
 
         model = keras.Model(inputs=inputs, outputs=outputs)
         return model

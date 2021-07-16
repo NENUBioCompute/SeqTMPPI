@@ -9,6 +9,9 @@
 # stop 2021-06-25 04:34:07
 # time 191995.84152054787 约 2.2221643518518515 天
 
+# 中科大服务器上运行
+# /mnt/data/sunshiwei/Phsi_Blos
+
 
 
 import time

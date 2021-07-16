@@ -8,7 +8,7 @@ import os
 
 import numpy as np
 import pandas as pd
-from keras import models
+from tensorflow.keras import models
 # from tensorflow.keras.models import load_model
 
 from calculate_performance import calculate_performance
@@ -142,6 +142,7 @@ def savepredict(fin_pair,dir_in,fin_model,dirout_result,batch_size=90,limit=0,po
     # dirout_result = '/home/19jiangjh/data/PPI/release/result_in_paper/alter_ratio/p_fw_train_validate/1/test'
     check_path(dirout_result)
     print('predict ',fin_pair,'...')
+    print('using feature ',dir_in,'...')
     print('save result in ',dirout_result)
     df = pd.read_table(fin_pair, header=None)
     if df.shape[1]!=3:

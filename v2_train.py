@@ -37,7 +37,7 @@ def getFeature(fin_pair,fin_fasta,dir_feature_db,dirout_feature):
     print('generate feature')
     BaseFeature().base_compose(dirout_feature, fin_pair, dir_feature_db, feature_type=Feature_type.PHSI_BLOS,check_data=False)
 
-def crossTrain(dirout_feature,f2resultOut,modelreuse=True):
+def crossTrain(f2out,dirout_feature,f2resultOut,modelreuse=True):
 
     '''
     cross train and test
@@ -59,7 +59,7 @@ def crossTrain(dirout_feature,f2resultOut,modelreuse=True):
     f2outdir = os.path.join(f1out, '5CV','data')
     check_path(f2outdir)
     train = os.path.join(f2outdir, 'train_vali.txt')
-    f2out = 'file/4train/5CV/elem'
+    # f2out = 'file/4train/5CV/elem'
     ratios_tvt = [1] * 5
     f3outs = [os.path.join(f2out,'%d.txt'%x) for x in range(5)]
     # PairDealer().part(train,ratios_tvt,f3outs)
@@ -92,11 +92,11 @@ def crossTrain(dirout_feature,f2resultOut,modelreuse=True):
             #       filters=300, batch_size=500, validate=validate,
             #       fin_model=fin_model)
 
-            entry(f3dirout, train, dirout_feature, model_type=Param.TRANSFORMER, limit=10, onehot=onehot, kernel_size=90,
-                  # epochs=80,
-                  epochs=2,
-                  filters=300, batch_size=500, validate=validate,
-                  fin_model=fin_model)
+            # entry(f3dirout, train, dirout_feature, model_type=Param.TRANSFORMER, limit=10, onehot=onehot, kernel_size=90,
+            #       # epochs=80,
+            #       epochs=2,
+            #       filters=300, batch_size=500, validate=validate,
+            #       fin_model=fin_model)
         #
         #
             oldfile = str(elem)
@@ -266,7 +266,11 @@ if __name__ == '__main__':
     #       fin_model=None)
 
     print('cross train')
-    crossTrain(dirout_feature, dirout, modelreuse=True)
+    f2out = 'file/4train/5CV/elem'
+    eachdir = 'benchmark_human'
+    dirout_feature = '/home/19jjhnenu/Data/Phsi_Blos/feature/%s/' % eachdir
+    dirout = '/home/19jjhnenu/Data/Phsi_Blos/result/%s/train' % eachdir
+    crossTrain(f2out,dirout_feature, dirout, modelreuse=True)
     '''
     testing on the model
     '''

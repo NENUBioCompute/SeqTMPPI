@@ -9,7 +9,9 @@ import time
 # from FastaDealear import FastaDealer
 # from FeatureDealer import BaseFeature, Feature_type
 # from PairDealer import ComposeData, PairDealer
-from PairDealer import PairDealer
+from shutil import copyfile
+
+from PairDealer import PairDealer, ComposeData
 from _10humanTrain_suppGPU import _5train
 # from _10humanTrain_support import _4getFeature
 # from common import check_path
@@ -22,10 +24,12 @@ from common import check_path, concatFile
 from entry import entry
 from myModel import Param
 from mySupport import calculateResults
+def divideCross(fin,fout,fold):
+    f2all = 'file/10humanTrain/3cluster/4pair.tsv'
 
 
 def crosshumanTrain(modelreuse=False):
-    f2all = 'file/10humanTrain/3cluster/4pair.tsv'
+    f2all = 'file/10humanTrain/3cluster/4pair.tsv' # 正负样本非1：1了
 
     f1out = 'file/10humanTrain/4train/group'
     f2out = 'file/10humanTrain/4train/cross/group'
@@ -65,8 +69,6 @@ def crosshumanTrain(modelreuse=False):
         oldfile = '2'
         for elem in range(5):
             if elem == cv:continue
-            if cv==0 and elem <3:continue
-
             f2dirout = os.path.join(f2resultOut,str(cv))
             f3dirout = os.path.join(f2dirout,str(elem))
             fin_model = os.path.join(f2dirout,oldfile,'_my_model.h5')
@@ -118,17 +120,43 @@ import time
 if __name__ == '__main__':
     print('start', time.strftime('%Y-%m-%d %H:%M:%S', time.localtime()))
     start = time.time()
-    import os
-    import tensorflow as tf
-    gpu_id = '1,2,3,4,5,6,7'
-    os.environ['CUDA_VISIBLE_DEVICES'] = str(gpu_id)
-    os.system('echo $CUDA_VISIBLE_DEVICES')
+    # import os
+    # import tensorflow as tf
+    # gpu_id = '1,2,3,4,5,6,7'
+    # os.environ['CUDA_VISIBLE_DEVICES'] = str(gpu_id)
+    # os.system('echo $CUDA_VISIBLE_DEVICES')
+    #
+    # tf_config = tf.compat.v1.ConfigProto()
+    # tf_config.gpu_options.allow_growth = True
+    # tf.compat.v1.Session(config=tf_config)
+    #
+    # crosshumanTrain(modelreuse=True)
 
-    tf_config = tf.compat.v1.ConfigProto()
-    tf_config.gpu_options.allow_growth = True
-    tf.compat.v1.Session(config=tf_config)
+    import pandas as pd
 
-    crosshumanTrain(modelreuse=True)
+    # fin = 'file/10humanTrain/3cluster/4pair.tsv'
+    # fin = 'file/10humanTrain/3cluster/4nega.tsv'
+    # df = pd.read_csv(fin,header=None,sep='\t')
+
+    # flist = ['file/10humanTrain/3cluster/4posi.tsv','file/10humanTrain/3cluster/4nega.tsv']
+    # dirout = 'file/10humanTrain/4train/10cross/'
+    # ratios = [1,1]
+    # limit = int(40215/11)
+    # labels = [1, 0]
+    # ComposeData().save(dirout,flist,ratios,limit,labels=None,groupcount=11,repeate=False)
+
+    # check_path('file/10humanTrain/4train/10cross_1/')
+    # dirin = 'file/10humanTrain/4train/10cross/'
+    # flist = [os.path.join(dirin,'%s/all.txt'%x) for x in range(10)]
+    # ftrain = 'file/10humanTrain/4train/10cross_1/train_validate.txt'
+    # concatFile(flist,ftrain)
+    # ftest = 'file/10humanTrain/4train/10cross_1/test.txt'
+    # copyfile(os.path.join(dirin,'%s/all.txt'%10),ftest)
+    # fall = 'file/10humanTrain/4train/10cross_1/all.txt'
+    # concatFile([ftrain,ftest], fall)
+
+
+
 
     pass
     print('stop', time.strftime('%Y-%m-%d %H:%M:%S', time.localtime()))

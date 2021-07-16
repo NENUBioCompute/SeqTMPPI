@@ -87,6 +87,15 @@ class ComposeData:
     正负样本都不重复，用于正负样本均衡的情况
     '''
     def compose_norepeat(self,flist,ratios,limit,labels=None,groupcount=1):
+        '''
+
+        :param flist:
+        :param ratios:
+        :param limit: 每一组有多少样本
+        :param labels:
+        :param groupcount:
+        :return:
+        '''
         ratios = calcu_ratio(ratios)
         src_datalist, _min,_nums = self.load(flist)
         np_ratios = np.array(ratios)

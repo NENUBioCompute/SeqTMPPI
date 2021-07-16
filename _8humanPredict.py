@@ -15,7 +15,7 @@ from FeatureDealer import BaseFeature, Feature_type
 from PairDealer import PairDealer
 from _5statistic import subcelluCount, calculateRatio, dropNul, mergeThree, getPDBPair, mergeTwo
 from common import check_path
-from dao import proteinPfam
+from dao import proteinPfam, getSingleInfo
 from mySupport import savepredict
 
 if __name__ == '__main__':
@@ -63,10 +63,11 @@ if __name__ == '__main__':
     '''
     get qualified single info
     '''
-    # getSingleInfo(f1tmp,f1tmpInfo,fin_type='single')
-    # getSingleInfo(f1nontmp,f1nontmpInfo,fin_type='single')
+    # getSingleInfo(f1tmp,f2tmpInfo,fin_type='single')
+    # getSingleInfo(f1nontmp,f2nontmpInfo,fin_type='single')
     '''
     get qualified protein
+    5088 tmp and 14743
     '''
     # df = pd.read_table(f2tmpInfo, header=None)
     # df[0].to_csv(f2tmp,header=None,index=None,sep='\t')

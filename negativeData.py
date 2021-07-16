@@ -64,7 +64,12 @@ def dropPositiveAndRepeate(fin,fbase,fout):
     df = pd.read_csv(fin, sep='\t', header=None)[[0,1]]
     df_base = pd.read_csv(fbase, sep='\t', header=None)[[0,1]].drop_duplicates()
     df_all = pd.concat([df_base,df]).drop_duplicates()
-    df_all.iloc[df_base.shape[0]:,:].to_csv(fout,header=None,index=None,sep='\t')
+    df_save = df_all.iloc[df_base.shape[0]:,:]
+    df_save.to_csv(fout,header=None,index=None,sep='\t')
+    print('origin %d,%s'%(df.shape[0],fin))
+    print('delete reperate %d,%s'%(df.shape[0]-df_save.shape[0],fbase))
+    print('save %d,%s'%(df_save.shape[0],fout))
+    print()
     return df_all
 def myfunc(x):
 

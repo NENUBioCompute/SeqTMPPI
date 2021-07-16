@@ -9,7 +9,8 @@ import os
 # from myModel import MyModel, Param
 import time
 
-from keras import models
+from sklearn.model_selection import StratifiedKFold
+from tensorflow.keras import models
 
 from common import check_path, handleBygroup, pair_ID, Feature_pair_DB
 from myData import TmpPSSMData, BaseData
@@ -71,6 +72,54 @@ def entry(dirout,fin_pair,dir_in,model_type = Param.CNN1D,limit=0,onehot=False,k
     mm.process(dirout,x_train, y_train, x_test, y_test,fin_model=fin_model)
     print('save result to %s'%dirout)
     del x_test,x_train,y_test,y_train,mm
+def entry_kfold(dirout,fin_pair,dir_in,model_type = Param.CNN1D,limit=0,onehot=False,kernel_size = 3,epochs=60,filters = 250,batch_size = 100,n_splits=10,fin_model=None):
+    '''
+    :param dirout:
+    :param fin_pair:
+    :param dir_in:
+    :param model_type:
+    :param limit: used when validate ==None
+    :param onehot:
+    :param kernel_size:
+    :param epochs:
+    :param filters:
+    :param batch_size:
+    :param validate:
+    :param fin_model: if not none , reload model and train
+    :return:
+    '''
+    # model_type = Param.CNN1D
+    # fin_pair =  '/home/jjhnenu/data/PPI/release/data/p_fp_fw_2_1_1/all.txt'
+    # dir_in =  '/home/jjhnenu/data/PPI/release/feature/pssm400_feature_1D/p_fp_fw_2_1_1/all/'
+    # fout = '/home/jjhnenu/data/PPI/release/result/pssm400_feature_1D/p_fp_fw_2_1_1/all/'
+    # if 'all' not in dirout:return
+    check_path(dirout)
+    print('dirout:',dirout)
+    # dir_in = dirout.replace(des, 'feature')
+    print('dir_in:',dir_in)
+    print('fin_pair',fin_pair)
+    bd = BaseData()
+    print('load dataset...')
+    X, Y= bd.loadTest(fin_pair,dir_in,onehot=onehot,is_shuffle=True,limit=limit)
+    # define 10-fold cross validation test harness
+    kfold = StratifiedKFold(n_splits=n_splits, shuffle=True, random_state=123)
+    kcount = 0
+    for train, test in kfold.split(X, Y):
+        kcount+=1
+        print('Build and fit model...')
+        print('x_train.shape',X[train].shape)
+        mm = MyModel(model_type = model_type,
+                        input_shape = X[train].shape[1:],
+                        filters = filters,
+                        kernel_size = kernel_size,
+                        pool_size = 2,
+                        hidden_dims = 250,
+                        batch_size = batch_size,
+                        epochs = epochs,)
+        tempdir = os.path.join(dirout,'%d/'%kcount)
+        check_path(tempdir)
+        mm.process(tempdir,X[train], Y[train], X[test], Y[test],fin_model=fin_model)
+        print('save result to %s'%dirout)
 def main(limit=5):
 # if __name__ == '__main__':
 #     limit = 0

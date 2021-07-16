@@ -120,7 +120,7 @@ class BaseData:
             data = data[index]
             label = label[index]
         if onehot:
-            from keras.utils import to_categorical
+            from tensorflow.keras.utils import to_categorical
             data = to_categorical(data)
         else:
             if len(data.shape) > 3:  # for 2D
