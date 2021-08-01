@@ -26,8 +26,8 @@ def getFeature(fin_pair,fin_fasta,dir_feature_db,dirout_feature):
     generate feature db
     '''
     print('generate feature db')
-    # fd = FastaDealer()
-    # fd.getPhsi_Blos(fin_fasta, dir_feature_db)
+    fd = FastaDealer()
+    fd.getPhsi_Blos(fin_fasta, dir_feature_db)
     '''
     generate feature
     '''
@@ -393,7 +393,7 @@ if __name__ == '__main__':
     # fold = 10
     # dirout_feature = '/mnt/data/sunshiwei/Phsi_Blos/feature/%s/' % 'DIP'
     # for idx in range(1,fold+1):
-    #     fin_pair = 'file/8DIPPredict/data/all.txt'
+    #     fin_pair = 'file/8DIPPredict/data/2all_noHP.txt'
     #     fin_model = '/mnt/data/sunshiwei/Phsi_Blos/result/%s/train/%d/_my_model.h5' % ('benchmark_human_10_sklearn', idx)
     #     dirout_result = '/mnt/data/sunshiwei/Phsi_Blos/result/%s/test/%s/%d/' % ('benchmark_human_10_sklearn', 'DIP',idx)
     #     savepredict(fin_pair, dirout_feature, fin_model, dirout_result,batch_size=500,onehot = False)
@@ -403,18 +403,18 @@ if __name__ == '__main__':
     '''
     testing on the 10 fold model independent DIP + each species
     '''
-    fold = 10
-    dirout_feature = '/mnt/data/sunshiwei/Phsi_Blos/feature/%s/' % 'DIP'
-    for idx in range(1,fold+1):
-        for eachfile in ['Ecoli', 'Human', 'Mus', 'SC','HP']:
-            fin_pair = 'file/8DIPPredict/data/%s/3pair.tsv'%eachfile
-            fin_model = '/mnt/data/sunshiwei/Phsi_Blos/result/%s/train/%d/_my_model.h5' % ('benchmark_human_10_sklearn', idx)
-            dirout_result = '/mnt/data/sunshiwei/Phsi_Blos/result/%s/test/%s_%s/%d/' % ('benchmark_human_10_sklearn', 'DIP',eachfile,idx)
-            savepredict(fin_pair, dirout_feature, fin_model, dirout_result,batch_size=500,onehot = False)
-    for eachfile in ['Ecoli', 'Human', 'Mus', 'SC','HP']:
-        dirout = '/mnt/data/sunshiwei/Phsi_Blos/result/%s/test/%s_%s/' % (
-            'benchmark_human_10_sklearn', 'DIP',eachfile)
-        calculateResults(dirout, dirout, filename='log.txt', row=2)
+    # fold = 10
+    # dirout_feature = '/mnt/data/sunshiwei/Phsi_Blos/feature/%s/' % 'DIP'
+    # for idx in range(1,fold+1):
+    #     for eachfile in ['Ecoli', 'Human', 'Mus', 'SC']:
+    #         fin_pair = 'file/8DIPPredict/data/%s/3pair.tsv'%eachfile
+    #         fin_model = '/mnt/data/sunshiwei/Phsi_Blos/result/%s/train/%d/_my_model.h5' % ('benchmark_human_10_sklearn', idx)
+    #         dirout_result = '/mnt/data/sunshiwei/Phsi_Blos/result/%s/test/%s_%s/%d/' % ('benchmark_human_10_sklearn', 'DIP',eachfile,idx)
+    #         savepredict(fin_pair, dirout_feature, fin_model, dirout_result,batch_size=500,onehot = False)
+    # for eachfile in ['Ecoli', 'Human', 'Mus', 'SC']:
+    #     dirout = '/mnt/data/sunshiwei/Phsi_Blos/result/%s/test/%s_%s/' % (
+    #         'benchmark_human_10_sklearn', 'DIP',eachfile)
+    #     calculateResults(dirout, dirout, filename='log.txt', row=2)
     '''
     把目前得到的结果写到钉钉里面，计划也写到钉钉里面
     然后drugkb的项目搞一搞

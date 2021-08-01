@@ -60,14 +60,20 @@ import pandas as pd
 #             if len(set(subA))+len(set(subB)) == len(set(subA+subB)):
 #                 fo.write('%s%s%s\n'%(g[0],sep,g[1]))
 #                 fo.flush()
-def dropPositiveAndRepeate(fin,fbase,fout):
+def dropPositiveAndRepeate(fin,fbase,fout,saverepeate=False):
     df = pd.read_csv(fin, sep='\t', header=None)[[0,1]]
     df_base = pd.read_csv(fbase, sep='\t', header=None)[[0,1]].drop_duplicates()
-    df_all = pd.concat([df_base,df]).drop_duplicates()
-    df_save = df_all.iloc[df_base.shape[0]:,:]
+    # df_all = pd.concat([df_base,df]).drop_duplicates()
+    df_concat = pd.concat([df_base,df])
+    df_all = df_concat.drop_duplicates() if not saverepeate else df_concat[df_concat.duplicated()]
+    if not saverepeate:
+        df_all =df_concat.drop_duplicates() if not saverepeate else df_concat[df_concat.duplicated()]
+        df_save = df_all.iloc[df_base.shape[0]:,:]
+    else:
+        df_save =  df_concat[df_concat.duplicated()]
     df_save.to_csv(fout,header=None,index=None,sep='\t')
     print('origin %d,%s'%(df.shape[0],fin))
-    print('delete reperate %d,%s'%(df.shape[0]-df_save.shape[0],fbase))
+    print('reperate %d,%s'%(df.shape[0]-df_save.shape[0],fbase))
     print('save %d,%s'%(df_save.shape[0],fout))
     print()
     return df_all

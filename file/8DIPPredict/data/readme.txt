@@ -1,4 +1,12 @@
-all.txt concat 2pair DIP关于上面几个文件夹物种中的TMP-nonTMP 包括了HP中的蛋白对
+all.txt concat 2pair DIP关于上面几个文件夹物种中的TMP-nonTMP 不包括HP中的蛋白对
+    '''
+    concat DIP posi exclude HP _8DIPPredict_1.py
+    '''
+    # dirin = 'file/8DIPPredict/data'
+    # fileList = [os.path.join(dirin,eachfile,'2pair.tsv') for eachfile in ['Ecoli', 'Mus', 'Human', 'SC']]
+    # fout = os.path.join(dirin,'all.txt')
+    # concatFile(fileList, fout)
+
 去冗余做了吗？做了，2pair 与正样本不重复,
 3pair 与十折交叉验证的训练集，验证集不重复发
 

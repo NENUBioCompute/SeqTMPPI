@@ -15,6 +15,10 @@ from common import check_path
 from myEvaluate import MyEvaluate
 from v2_FastaDealear import FastaDealer
 from v2_FeatureDealer import BaseFeature
+
+flag = False
+flagA = False
+flagB = False
 def loaddata(ftmp_fa,fnontmp_fa):
     '''
 
@@ -29,12 +33,18 @@ def loaddata(ftmp_fa,fnontmp_fa):
     fd = FastaDealer()
     bf = BaseFeature()
     p = Protein()
+    global flag,flagA,flagB
     for pa in SeqIO.parse(ftmp_fa,'fasta'):
-        a = fd.phsi_blos(pa.seq)
+        # if pa.id == 'Q8NFJ6':flagA = True
+        # if not flagA:continue
         if not p.checkProtein(pa.seq, 50, 2000, uncomm=True):continue
+        a = fd.phsi_blos(pa.seq)
         for pb in SeqIO.parse(fnontmp_fa,'fasta'):
-            b = fd.phsi_blos(pb.seq)
+            # if pb.id == 'Q0D2J5':flagB = True
+            # if idpair=='Q8NFJ6-Q0D2J5':flag = True
+            # if not flagB:continue
             if not p.checkProtein(pb.seq, 50, 2000, uncomm=True): continue
+            b = fd.phsi_blos(pb.seq)
             c = bf.padding_PSSM(a,b,vstack=True,shape=(2000,25))
             yield '%s-%s'%(pa.id,pb.id),c
 def loadmodel(fmodel):
@@ -56,25 +66,27 @@ if __name__ == '__main__':
     print('start', time.strftime('%Y-%m-%d %H:%M:%S', time.localtime()))
     start = time.time()
 
-    # import os
-    # import tensorflow as tf
-    #
-    # gpu_id = '0,1,2,3'
-    # # gpu_id = '4,5,6,7'
-    # os.environ['CUDA_VISIBLE_DEVICES'] = str(gpu_id)
-    # os.system('echo $CUDA_VISIBLE_DEVICES')
-    #
-    # tf_config = tf.compat.v1.ConfigProto()
-    # tf_config.gpu_options.allow_growth = True
-    #
-    # tf.compat.v1.Session(config=tf_config)
+    import os
+    import tensorflow as tf
+
+    # gpu_id = '-1'
+    gpu_id = '0,1,2,3'
+    # gpu_id = '4,5,6,7'
+    os.environ['CUDA_VISIBLE_DEVICES'] = str(gpu_id)
+    os.system('echo $CUDA_VISIBLE_DEVICES')
+
+    tf_config = tf.compat.v1.ConfigProto()
+    tf_config.gpu_options.allow_growth = True
+
+    tf.compat.v1.Session(config=tf_config)
 
     '''
     load the best model in 10 fold
     '''
     fmodel = '/mnt/data/sunshiwei/Phsi_Blos/result/%s/train/5/_my_model.h5' % 'benchmark_human_10_sklearn'
-    fout = '/mnt/data/sunshiwei/Phsi_Blos/result/%s/predict/5/human_predict.tsv' % 'benchmark_human_10_sklearn'
+    fout = '/mnt/data/sunshiwei/Phsi_Blos/result/%s/predict/5/secondtry/human_predict.tsv' % 'benchmark_human_10_sklearn'
     f2out = '/mnt/data/sunshiwei/Phsi_Blos/result/%s/predict/5/2human_predict.tsv' % 'benchmark_human_10_sklearn'
+    f3out = '/mnt/data/sunshiwei/Phsi_Blos/result/%s/predict/5/3human_predict.tsv' % 'benchmark_human_10_sklearn'
     # fmodel = '/home/jjhnenu/Data/zkd_phsi_blos_10_fold/benchmark_human_10_sklearn/train/5/_my_model.h5'
     # fout = '/home/jjhnenu/Data/zkd_phsi_blos_10_fold/benchmark_human_10_sklearn/predict/5/human_predict.tsv'
     check_path(fout[:fout.rindex('/')])
@@ -82,15 +94,15 @@ if __name__ == '__main__':
     fnontmp_fa = 'file/8humanPredict/3nontmp.fasta'
 
 
-    limit = 500
+    limit = 20000
     x_test = []
     ids = []
     model = loadmodel(fmodel)
     batch_size = 500
     with open(fout,'a') as fo:
+    # with open(f3out,'a') as fo:
         for idpair, feature in loaddata(ftmp_fa, fnontmp_fa):
             if len(ids)>=limit:
-                # result_predict = model.predict(x_test)
                 x_test = np.array(x_test)
                 result_predict = model.predict(x_test, batch_size=batch_size)
                 result_class = (result_predict > 0.5).astype("int32")
@@ -99,26 +111,29 @@ if __name__ == '__main__':
                 for i in range(len(ids)):
                     fo.write('%s\t%d\t%f\n'%(ids[i],result_class[i],result_predict[i]))
                     fo.flush()
+                del x_test,result_predict,result_class,ids
                 x_test = []
                 ids = []
             x_test.append(feature)
             ids.append((idpair))
 
-    pass
 
     '''
     fo.write('%s\t%d\t%f\n'%(idpair,result_class[i],result_predict[i]))
     这一行 idpair 改为ids[i]
     '''
-    with open(f2out,'w') as fo:
-        with open(fout,'r') as fi:
-            for idpair, feature in loaddata(ftmp_fa, fnontmp_fa):
-                line = fi.readline()
-                if not line:break
-                _, result_class, result_predict = line[:-1].split('\t')
-                fo.write('%s\t%s\t%s\n' % (idpair, result_class, result_predict))
-                fo.flush()
+    # with open(f2out,'w') as fo:
+    #     with open(fout,'r') as fi:
+    #         for idpair, feature in loaddata(ftmp_fa, fnontmp_fa):
+    #             line = fi.readline()
+    #             if not line:break
+    #             _, result_class, result_predict = line[:-1].split('\t')
+    #             fo.write('%s\t%s\t%s\n' % (idpair, result_class, result_predict))
+    #             fo.flush()
     print('stop', time.strftime('%Y-%m-%d %H:%M:%S', time.localtime()))
     print('time', time.time() - start)
+
+
+#     Q8TCW7-P20226
 
 

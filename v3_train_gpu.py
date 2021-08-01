@@ -234,11 +234,11 @@ if __name__ == '__main__':
     #       fin_model=None)
 
     print('cross train')
-    f2out = 'file/10humanTrain/4train/cross/group/'
-    eachdir = 'benchmark_human'
-    dirout_feature = '/home/jiangjiuhong/Data/Phsi_Blos/feature/%s/' % eachdir
-    dirout = '/home/jiangjiuhong/Data/Phsi_Blos/result/%s/train' % eachdir
-    crossTrain(f2out,dirout_feature, dirout, modelreuse=True)
+    # f2out = 'file/10humanTrain/4train/cross/group/'
+    # eachdir = 'benchmark_human'
+    # dirout_feature = '/home/jiangjiuhong/Data/Phsi_Blos/feature/%s/' % eachdir
+    # dirout = '/home/jiangjiuhong/Data/Phsi_Blos/result/%s/train' % eachdir
+    # crossTrain(f2out,dirout_feature, dirout, modelreuse=True)
     '''
     testing on the model
     '''
